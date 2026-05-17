@@ -1,135 +1,518 @@
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Afsar's Projects</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+import React, { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  BarChart3,
+  BookOpen,
+  BriefcaseBusiness,
+  CheckCircle2,
+  Database,
+  ExternalLink,
+  Github,
+  Linkedin,
+  LineChart,
+  Mail,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  TerminalSquare,
+  TrendingUp,
+} from "lucide-react";
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+const existingProjects = [
+  {
+    title: "Movie Revenue Correlation Analysis",
+    type: "Data Analysis",
+    status: "Existing project",
+    summary:
+      "A Python notebook exploring the relationship between gross revenue and other movie-level variables, using correlation analysis and visual exploration.",
+    whyItMatters:
+      "Shows comfort with exploratory data analysis, statistical reasoning, and communicating findings from messy datasets.",
+    tools: ["Python", "pandas", "Jupyter", "Correlation", "Visualization"],
+    link: "https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb",
+    category: "Existing",
+  },
+  {
+    title: "COVID-19 SQL Data Exploration",
+    type: "SQL Analysis",
+    status: "Existing project",
+    summary:
+      "SQL-based exploration of COVID deaths and vaccination datasets, focusing on joins, aggregations, filtering, and trend analysis.",
+    whyItMatters:
+      "Demonstrates practical SQL querying, dataset exploration, and the ability to structure analytical questions against relational data.",
+    tools: ["SQL", "Joins", "Aggregations", "Data Exploration"],
+    link: "https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql",
+    category: "Existing",
+  },
+  {
+    title: "Nashville Housing Data Cleaning",
+    type: "Data Quality",
+    status: "Existing project",
+    summary:
+      "SQL cleaning workflow transforming raw housing records into a more usable structure for downstream analysis.",
+    whyItMatters:
+      "Useful evidence for data operations roles because it shows practical data cleaning, standardisation, and transformation logic.",
+    tools: ["SQL", "Data Cleaning", "Transformation", "Excel"],
+    link: "https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql",
+    category: "Existing",
+  },
+];
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1>Afsar Sharif<br />
-						Portfolio Projects</h1>
-						<p>Senior Bussiness Associate, Spericalist Trading and Liquidity Insights at London Stock Exchange with skills in SQL, Python and Tableau <a href="https://www.linkedin.com/in/afsar-sharif-75ba42143/">@AfsarSharif</a>
-						</p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
-					</div>
+const futureProjects = [
+  {
+    title: "Market Data Quality Monitoring System",
+    type: "Flagship build",
+    status: "Recommended next project",
+    summary:
+      "A Python and SQL-style pipeline that checks market data for missing records, stale prices, timestamp irregularities, outliers, and schema issues.",
+    whyItMatters:
+      "Directly aligned to systematic investment data roles: researchers need clean, reliable datasets before any signal or model can be trusted.",
+    tools: ["Python", "SQL", "dbt-style tests", "Data Quality", "Time Series"],
+    link: "#",
+    category: "Recommended",
+  },
+  {
+    title: "Execution Quality & Liquidity Interaction Study",
+    type: "Market microstructure",
+    status: "Recommended flagship",
+    summary:
+      "A research-style project analysing fill rates, spread regimes, market impact, failed liquidity interaction, and simple venue-quality metrics using public or synthetic data.",
+    whyItMatters:
+      "This connects your current market-structure experience to quant execution research without exposing confidential workplace data.",
+    tools: ["Python", "Market Microstructure", "TCA", "Plotly", "Research Write-up"],
+    link: "#",
+    category: "Recommended",
+  },
+  {
+    title: "Order Book Imbalance & Short-Horizon Price Movement",
+    type: "Quant research note",
+    status: "Recommended research project",
+    summary:
+      "A compact research notebook testing whether simple order book imbalance measures explain short-horizon returns or spread changes.",
+    whyItMatters:
+      "Shows hypothesis-led thinking, feature engineering, model evaluation, and the ability to link market data structure to trading outcomes.",
+    tools: ["Python", "Feature Engineering", "Classification", "Time Series"],
+    link: "#",
+    category: "Recommended",
+  },
+];
 
+const allProjects = [...futureProjects, ...existingProjects];
 
-				<!-- Nav -->
-				<nav id="nav">
-					<ul class="links">
-						<li class="active"><a href="index.html">Projects</a></li>
-					
-					</ul>
-					<ul class="icons">
-						<li><a href="https://www.linkedin.com/in/afsar-sharif-75ba42143/" class="icon brands alt fa-linkedin"><span class="label">LinkdedIn</span></a></li>
-						<li><a href="https://github.com/afsar20/PortfolioProjects" class="icon brands alt fa-github"><span class="label">Github</span></a></li>
-					</ul>
-				</nav>
+const researchNotes = [
+  "Why clean market data matters before signal research",
+  "A plain-English guide to execution quality and fill probability",
+  "How market microstructure links to systematic trading workflows",
+  "Black-Scholes, stochastic models, and what they teach about pricing intuition",
+];
 
+const skillGroups = [
+  {
+    name: "Programming & Analysis",
+    items: ["Python", "SQL", "C++", "pandas", "NumPy", "Jupyter"],
+  },
+  {
+    name: "Markets & Quant",
+    items: ["Market microstructure", "Execution analytics", "TCA", "Time-series analysis", "Financial mathematics"],
+  },
+  {
+    name: "Data Infrastructure",
+    items: ["Snowflake", "Tableau", "Data quality checks", "Pipeline thinking", "Git/GitHub"],
+  },
+];
 
-				<!-- Main -->
-					<div id="main">
+const highlights = [
+  {
+    icon: LineChart,
+    title: "Execution analytics",
+    text: "Experience translating trading and order-flow data into actionable insight for execution quality and venue performance.",
+  },
+  {
+    icon: Database,
+    title: "Data quality mindset",
+    text: "Strong focus on whether data is complete, clean, timestamped correctly, and suitable for downstream research.",
+  },
+  {
+    icon: BookOpen,
+    title: "Mathematical finance",
+    text: "Currently building deeper quantitative foundations through stochastic modelling, derivative pricing, and financial mathematics.",
+  },
+];
 
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
+function Badge({ children, tone = "default" }) {
+  const tones = {
+    default: "bg-slate-800/80 text-slate-200 border-slate-700",
+    accent: "bg-cyan-400/10 text-cyan-200 border-cyan-300/20",
+    green: "bg-emerald-400/10 text-emerald-200 border-emerald-300/20",
+    amber: "bg-amber-400/10 text-amber-200 border-amber-300/20",
+  };
 
-									<h2><a href="https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb">Movies Correlation Project in Python<br />
-									</a></h2>
-									<p>
-										The aim of this porject is to look at the correlation between gross revenue and other variables 
-									</p>
-								</header>
-								<a href="https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb" class="image main"><img src="images/Movies.jpg" alt="" /></a>
-								<ul class="actions special">
-									<li><a href="https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb" class="button large">View Project</a></li>
-								</ul>
-							</article>
+  return (
+    <span className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${tones[tone]}`}>
+      {children}
+    </span>
+  );
+}
 
-						<!-- Posts -->
-							<section class="posts">
-								<article>
-									<header>
-										
-										<h2><a href="https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql">Data Exploration in SQL<br />
-										</a></h2>
-									</header>
-									<a href="https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql" class="image fit"><img src="images/covid.jpg" alt="" /></a>
-									<p> Data Exploration of Covid 19 Dataset in SQL Server.</p>
-									<ul class="actions special">
-										<li><a href="https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql" class="button">View Project</a></li>
-									</ul>
-								</article>
+function SectionHeader({ eyebrow, title, description }) {
+  return (
+    <div className="mx-auto mb-10 max-w-3xl text-center">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300">{eyebrow}</p>
+      <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
+      {description && <p className="mt-4 text-base leading-7 text-slate-300">{description}</p>}
+    </div>
+  );
+}
 
-								<article>
-									<header>
-									
-										<h2><a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql">Data Cleaning in SQL<br />
-										</a></h2>
-									</header>
-									<a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql" class="image fit"><img src="images/housing.jpg" alt="" /></a>
-									<p>This project focuses on taking raw housing data from Nashville and transforming it in SQL to make it usable for analysis.</p>
-									<ul class="actions special">
-										<li><a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql" class="button">View Porject</a></li>
-									</ul>
-								</article>
+function MiniChart() {
+  const bars = [42, 67, 38, 74, 91, 59, 82, 70, 96, 76, 88, 64];
 
+  return (
+    <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur">
+      <div className="mb-5 flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-white">Execution signal dashboard</p>
+          <p className="text-xs text-slate-400">Illustrative portfolio visual</p>
+        </div>
+        <Badge tone="green">Live-style view</Badge>
+      </div>
 
-						<section class="split contact">
-							<section class="alt">
-								<h3>Address</h3>
-								<p>London, KT3<br />
-							</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="#">07508624924</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href="#">safsar2073@gmail.com</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="https://www.linkedin.com/in/afsar-sharif-75ba42143/" class="icon brands alt fa-linkedin"><span class="label">LinkdedIn</span></a></li>
-									<li><a href="https://github.com/afsar20/PortfolioProjects" class="icon brands alt fa-github"><span class="label">Github</span></a></li>
-									
-								</ul>
-							</section>
-						</section>
-					</footer>
+      <div className="grid grid-cols-3 gap-3">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <p className="text-xs text-slate-400">Fill quality</p>
+          <p className="mt-2 text-2xl font-semibold text-white">87%</p>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <p className="text-xs text-slate-400">Spread regime</p>
+          <p className="mt-2 text-2xl font-semibold text-white">Tight</p>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <p className="text-xs text-slate-400">Data checks</p>
+          <p className="mt-2 text-2xl font-semibold text-white">24</p>
+        </div>
+      </div>
 
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
+      <div className="mt-6 flex h-44 items-end gap-2 rounded-2xl border border-white/10 bg-slate-950/80 p-4">
+        {bars.map((value, index) => (
+          <motion.div
+            key={index}
+            initial={{ height: 10, opacity: 0.4 }}
+            animate={{ height: `${value}%`, opacity: 1 }}
+            transition={{ duration: 0.7, delay: index * 0.04 }}
+            className="w-full rounded-t-lg bg-gradient-to-t from-cyan-500 to-blue-300"
+          />
+        ))}
+      </div>
 
-			</div>
+      <div className="mt-5 space-y-3">
+        {["Timestamp integrity check passed", "Outlier trade detection running", "Venue comparison refreshed"].map((item) => (
+          <div key={item} className="flex items-center gap-3 rounded-2xl bg-white/[0.03] px-4 py-3 text-sm text-slate-300">
+            <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+            {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+function ProjectCard({ project }) {
+  return (
+    <motion.article
+      layout
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      className="group flex h-full flex-col rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-xl shadow-slate-950/30 backdrop-blur transition hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-white/[0.06]"
+    >
+      <div className="mb-5 flex items-start justify-between gap-4">
+        <div>
+          <Badge tone={project.category === "Recommended" ? "accent" : "amber"}>{project.status}</Badge>
+          <h3 className="mt-4 text-xl font-semibold leading-tight text-white">{project.title}</h3>
+          <p className="mt-1 text-sm text-cyan-200">{project.type}</p>
+        </div>
+        <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-3 text-cyan-200">
+          {project.category === "Recommended" ? <TrendingUp className="h-5 w-5" /> : <TerminalSquare className="h-5 w-5" />}
+        </div>
+      </div>
 
-	</body>
-</html>
+      <p className="text-sm leading-6 text-slate-300">{project.summary}</p>
+      <div className="mt-5 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Recruiter signal</p>
+        <p className="mt-2 text-sm leading-6 text-slate-300">{project.whyItMatters}</p>
+      </div>
+
+      <div className="mt-5 flex flex-wrap gap-2">
+        {project.tools.map((tool) => (
+          <span key={tool} className="rounded-full bg-slate-950/70 px-3 py-1 text-xs text-slate-300">
+            {tool}
+          </span>
+        ))}
+      </div>
+
+      <a
+        href={project.link}
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-200 transition group-hover:text-cyan-100"
+      >
+        {project.link === "#" ? "Add project write-up" : "View project"}
+        <ExternalLink className="h-4 w-4" />
+      </a>
+    </motion.article>
+  );
+}
+
+export default function PortfolioRedesign() {
+  const [filter, setFilter] = useState("All");
+  const [query, setQuery] = useState("");
+
+  const filteredProjects = useMemo(() => {
+    return allProjects.filter((project) => {
+      const matchesFilter = filter === "All" || project.category === filter;
+      const haystack = `${project.title} ${project.summary} ${project.tools.join(" ")}`.toLowerCase();
+      const matchesQuery = haystack.includes(query.toLowerCase());
+      return matchesFilter && matchesQuery;
+    });
+  }, [filter, query]);
+
+  return (
+    <main className="min-h-screen bg-slate-950 text-slate-100">
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="absolute left-1/2 top-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute right-0 top-1/3 h-[420px] w-[420px] rounded-full bg-blue-700/20 blur-3xl" />
+        <div className="absolute bottom-0 left-0 h-[420px] w-[420px] rounded-full bg-emerald-500/10 blur-3xl" />
+      </div>
+
+      <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
+        <a href="#top" className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-300 text-sm font-bold text-slate-950">AS</div>
+          <div>
+            <p className="font-semibold text-white">Afsar Sharif</p>
+            <p className="text-xs text-slate-400">Quant analytics portfolio</p>
+          </div>
+        </a>
+        <nav className="hidden items-center gap-8 text-sm text-slate-300 md:flex">
+          <a href="#projects" className="hover:text-white">Projects</a>
+          <a href="#research" className="hover:text-white">Research</a>
+          <a href="#experience" className="hover:text-white">Experience</a>
+          <a href="#contact" className="hover:text-white">Contact</a>
+        </nav>
+      </header>
+
+      <section id="top" className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-6 pb-24 pt-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-20">
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div className="mb-6 flex flex-wrap gap-3">
+            <Badge tone="accent">Execution analytics</Badge>
+            <Badge>Market microstructure</Badge>
+            <Badge>Python & SQL</Badge>
+          </div>
+
+          <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl">
+            Market structure research, execution analytics, and data-quality projects.
+          </h1>
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
+            I work at the intersection of trading data, market microstructure, and quantitative analysis. My work focuses on turning complex order-flow and market datasets into clear insight for execution quality, liquidity interaction, and systematic decision-making.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-4">
+            <a href="#projects" className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-200">
+              View featured projects <ArrowRight className="h-4 w-4" />
+            </a>
+            <a href="https://github.com/afsar20" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08]">
+              <Github className="h-4 w-4" /> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/AfsarSharif" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08]">
+              <Linkedin className="h-4 w-4" /> LinkedIn
+            </a>
+          </div>
+
+          <div className="mt-10 grid max-w-2xl grid-cols-3 gap-3">
+            {[
+              ["Current focus", "Execution analytics"],
+              ["Core tools", "Python / SQL"],
+              ["Direction", "Quant research"],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <p className="text-xs text-slate-400">{label}</p>
+                <p className="mt-2 text-sm font-semibold text-white">{value}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.1 }}>
+          <MiniChart />
+        </motion.div>
+      </section>
+
+      <section className="relative z-10 border-y border-white/10 bg-white/[0.025] px-6 py-14 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-3">
+          {highlights.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div key={item.title} className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+                <div className="mb-5 inline-flex rounded-2xl bg-cyan-300/10 p-3 text-cyan-200">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{item.text}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="projects" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-8">
+        <SectionHeader
+          eyebrow="Project portfolio"
+          title="Show the thinking, not just the code"
+          description="The redesigned project section separates existing work from recommended flagship builds. This helps recruiters see both your current technical base and the direction you are moving toward."
+        />
+
+        <div className="mb-8 flex flex-col gap-4 rounded-3xl border border-white/10 bg-white/[0.04] p-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-wrap gap-2">
+            {["All", "Recommended", "Existing"].map((item) => (
+              <button
+                key={item}
+                onClick={() => setFilter(item)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  filter === item ? "bg-cyan-300 text-slate-950" : "bg-slate-950/70 text-slate-300 hover:bg-slate-900"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <label className="flex items-center gap-3 rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 md:w-80">
+            <Search className="h-4 w-4 text-slate-500" />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search projects or skills"
+              className="w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
+            />
+          </label>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {filteredProjects.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
+        </div>
+      </section>
+
+      <section id="research" className="relative z-10 bg-white/[0.025] px-6 py-24 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-300">Research notes</p>
+            <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">A place for concise market and quant write-ups</h2>
+            <p className="mt-5 text-base leading-7 text-slate-300">
+              The site should include short articles that explain your approach in plain language first, then add the technical depth. This makes the portfolio useful for both recruiters and technical hiring managers.
+            </p>
+          </div>
+          <div className="grid gap-4">
+            {researchNotes.map((note, index) => (
+              <div key={note} className="flex items-center gap-4 rounded-3xl border border-white/10 bg-slate-950/60 p-5">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-300/10 text-sm font-semibold text-cyan-200">
+                  0{index + 1}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-white">{note}</h3>
+                  <p className="mt-1 text-sm text-slate-400">Short note format: problem → method → findings → market implication.</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" className="relative z-10 mx-auto max-w-7xl px-6 py-24 lg:px-8">
+        <SectionHeader
+          eyebrow="Profile"
+          title="Positioning for quant/data roles"
+          description="This section reframes the website from a beginner project page into a professional research and analytics portfolio."
+        />
+
+        <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+            <div className="mb-6 flex items-center gap-4">
+              <div className="rounded-2xl bg-cyan-300/10 p-3 text-cyan-200">
+                <BriefcaseBusiness className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white">Current role narrative</h3>
+                <p className="text-sm text-slate-400">Senior Associate, Specialist Trading & Liquidity Insights</p>
+              </div>
+            </div>
+            <p className="text-base leading-8 text-slate-300">
+              I focus on trading-data analysis, client-facing execution insight, and market-structure research across equities trading. My goal is to develop increasingly quantitative work around execution quality, venue performance, liquidity interaction, and systematic market-data workflows.
+            </p>
+            <div className="mt-7 grid gap-4 md:grid-cols-2">
+              {[
+                "Translate complex market data into clear commercial and technical insight",
+                "Build analysis using Python, SQL, and dashboard-style workflows",
+                "Connect market structure, execution outcomes, and data quality",
+                "Develop a stronger research profile through mathematical finance study",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-2xl bg-slate-950/60 p-4 text-sm leading-6 text-slate-300">
+                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8">
+            <div className="mb-6 flex items-center gap-4">
+              <div className="rounded-2xl bg-cyan-300/10 p-3 text-cyan-200">
+                <Sparkles className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-white">Technical stack</h3>
+                <p className="text-sm text-slate-400">Keep this simple and credible</p>
+              </div>
+            </div>
+            <div className="space-y-5">
+              {skillGroups.map((group) => (
+                <div key={group.name}>
+                  <p className="mb-3 text-sm font-semibold text-white">{group.name}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span key={item} className="rounded-full border border-white/10 bg-slate-950/60 px-3 py-1.5 text-xs text-slate-300">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className="relative z-10 px-6 pb-24 lg:px-8">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-cyan-300/20 bg-gradient-to-br from-cyan-300/15 via-slate-900 to-slate-950 p-8 md:p-12">
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Contact</p>
+              <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">Make the next step easy for recruiters.</h2>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+                Use a simple contact block with professional links only. Avoid publishing home address or phone number on the public site; email, LinkedIn, GitHub, and a CV download are enough.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <a href="mailto:safsar2073@gmail.com" className="inline-flex items-center gap-2 rounded-full bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-200">
+                <Mail className="h-4 w-4" /> Email
+              </a>
+              <a href="https://github.com/afsar20" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white hover:bg-white/[0.08]">
+                <Github className="h-4 w-4" /> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/AfsarSharif" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-5 py-3 text-sm font-semibold text-white hover:bg-white/[0.08]">
+                <Linkedin className="h-4 w-4" /> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
