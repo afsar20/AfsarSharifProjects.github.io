@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A live SPY implied-volatility surface built with the Interactive Brokers API, snapshot capture and reproducible offline rendering.">
+    <title>SPY Implied-Volatility Surface | Afsar Sharif</title>
+    <link rel="stylesheet" href="../assets/css/portfolio.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">AS</span>
+          <span>Afsar Sharif</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html#work">Projects</a></li>
+          <li><a href="us-equities.html">US equities</a></li>
+          <li><a aria-current="page" href="volatility-surface.html">Volatility surface</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="project-hero">
+        <div class="shell">
+          <div class="breadcrumbs"><a href="../index.html">Portfolio</a> / Volatility surface</div>
+          <p class="eyebrow">US options · live market data · Python</p>
+          <h1>SPY Implied-Volatility Surface</h1>
+          <p class="lede">
+            A small end-to-end market-data application: resolve the option chain, request model implied
+            volatility, capture timestamped snapshots and recreate the surface offline.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://github.com/afsar20/AfsarSharifProjects.github.io/tree/main/code/volatility_surface">View the code</a>
+            <a class="button secondary" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/code/volatility_surface/spy_iv_snapshot_sample.csv">View sample data</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="shell">
+        <section class="metrics" aria-label="Snapshot coverage">
+          <div class="metric">
+            <span class="metric-value">4</span>
+            <span class="metric-label">Short-dated expiries in the saved surface</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">9</span>
+            <span class="metric-label">Unique strikes centred around spot</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">15</span>
+            <span class="metric-label">Timestamped observations across a 30-second capture</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="section">
+        <div class="shell content-grid">
+          <div class="prose">
+            <p class="eyebrow">The build</p>
+            <h2>From a live chain to a repeatable research snapshot</h2>
+            <p>
+              The application connects to a locally running Interactive Brokers Trader Workstation or
+              Gateway session. It resolves the SPY underlying contract, retrieves the SMART option-chain
+              definition and selects the next four expiries with up to nine strikes within roughly 6% of spot.
+            </p>
+            <p>
+              To focus on the more liquid out-of-the-money side, the grid requests puts below spot and calls
+              at or above spot. IBKR model implied volatility is collected asynchronously, while contract-level
+              events prevent missing definitions from blocking the entire chain.
+            </p>
+            <div class="callout">
+              <h3>Why save the snapshot?</h3>
+              <p>
+                Separating collection from analysis makes the result reproducible. A reviewer can inspect the
+                exact inputs, rerun the plot without a live market connection and distinguish a data issue from
+                a visualisation issue.
+              </p>
+            </div>
+          </div>
+          <figure class="figure-card dark">
+            <img src="../assets/images/volatility_surface.png" alt="SPY implied-volatility surface across strike and expiry with a front-expiry skew chart">
+            <figcaption>Latest observation in the saved sample. Gaps are interpolated for display only.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section dark-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Data flow</p>
+              <h2>A small event-driven pipeline</h2>
+            </div>
+            <p>
+              Interactive Brokers callbacks arrive asynchronously, so the application keeps contract metadata,
+              request IDs and observations separate before joining them for the surface.
+            </p>
+          </div>
+          <div class="process-grid">
+            <article class="process-step">
+              <span>01</span>
+              <h3>Resolve</h3>
+              <p>Confirm the SPY contract and capture the live underlying price.</p>
+            </article>
+            <article class="process-step">
+              <span>02</span>
+              <h3>Select</h3>
+              <p>Choose short expiries and a compact strike range around spot.</p>
+            </article>
+            <article class="process-step">
+              <span>03</span>
+              <h3>Collect</h3>
+              <p>Map option-computation callbacks to expiry, strike and right.</p>
+            </article>
+            <article class="process-step">
+              <span>04</span>
+              <h3>Persist</h3>
+              <p>Write timestamped observations, then render the saved grid offline.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell content-grid reverse">
+          <div class="stack">
+            <div class="callout">
+              <h3>Surface interpretation</h3>
+              <p>
+                The sample shows a pronounced short-dated smile with higher implied volatility away from spot.
+                The chart is useful for inspecting shape and data coverage, not for pricing or relative-value trading.
+              </p>
+            </div>
+            <div class="callout">
+              <h3>Operational controls</h3>
+              <p>
+                Timeouts, contract-resolution events, data-mode reporting and a saved-snapshot fallback make
+                failure states visible and keep the desktop display from being the only record of the result.
+              </p>
+            </div>
+          </div>
+          <div class="prose">
+            <p class="eyebrow">What the project demonstrates</p>
+            <h2>Market-data handling, not just a 3D chart</h2>
+            <ul>
+              <li>Contract discovery and request orchestration through an asynchronous broker API.</li>
+              <li>A stable mapping between request IDs and option attributes.</li>
+              <li>Separation of live collection, persistence and offline research.</li>
+              <li>Validation of required fields and minimum grid dimensions before rendering.</li>
+              <li>Clear treatment of interpolation as a presentation step rather than observed data.</li>
+            </ul>
+            <div class="card-actions">
+              <a class="button ink" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/code/volatility_surface/live_surface.py">Live application</a>
+              <a class="button ink" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/code/volatility_surface/snapshot_export.py">Snapshot exporter</a>
+              <a class="button ink" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/code/volatility_surface/render_snapshot.py">Offline renderer</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="shell content-grid">
+          <div class="prose">
+            <p class="eyebrow">Limits</p>
+            <h2>What would change in a production surface</h2>
+            <p>
+              This is a visual research tool, not an arbitrage-free calibration. It uses strike rather than
+              forward moneyness, does not fit a parametric model, and does not explicitly adjust for rates or
+              dividends. The saved example is short-dated and sparse; edge values are interpolated where the
+              final strike is unavailable for an expiry.
+            </p>
+            <p>
+              A production version would add quote-quality filters, bid/ask-aware IVs, forward normalisation,
+              no-arbitrage checks, a calibrated model such as SVI, and monitoring for stale or crossed markets.
+            </p>
+          </div>
+          <div class="prose">
+            <p class="eyebrow">Run requirements</p>
+            <ul class="source-list">
+              <li>Interactive Brokers Trader Workstation or IB Gateway running locally.</li>
+              <li>API connections enabled and the appropriate US equity and options market-data subscriptions.</li>
+              <li>Python packages listed in the repository's <a href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/requirements.txt">requirements file</a>.</li>
+              <li>No broker username, password or API credential is stored in the project.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <p>Research demonstration using a saved user-generated market-data snapshot.</p>
+        <div class="footer-links">
+          <a href="../index.html">Portfolio</a>
+          <a href="us-equities.html">Previous project</a>
+          <a href="https://github.com/afsar20">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="US equity liquidity intelligence using Cboe daily market-volume data: off-exchange activity, venue concentration, tape leadership and share shifts.">
+    <title>US Equities Liquidity Intelligence | Afsar Sharif</title>
+    <link rel="stylesheet" href="../assets/css/portfolio.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">AS</span>
+          <span>Afsar Sharif</span>
+        </a>
+        <ul class="nav-links">
+          <li><a href="../index.html#work">Projects</a></li>
+          <li><a aria-current="page" href="us-equities.html">US equities</a></li>
+          <li><a href="volatility-surface.html">Volatility surface</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="project-hero">
+        <div class="shell">
+          <div class="breadcrumbs"><a href="../index.html">Portfolio</a> / US equities</div>
+          <p class="eyebrow">Liquidity intelligence · 2025 public data</p>
+          <h1>US Equities Liquidity Intelligence</h1>
+          <p class="lede">
+            A compact study of exchange and off-exchange activity, venue specialisation and liquidity regimes,
+            built to support the questions a trading or liquidity forum should ask next.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/notebooks/us_equities_liquidity_intelligence.ipynb">View the notebook</a>
+            <a class="button secondary" href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/code/us_equities_liquidity.py">View Python source</a>
+            <a class="button secondary" href="https://www.cboe.com/markets/us/equities/market-statistics/historical-market-volume/">Cboe data</a>
+          </div>
+        </div>
+      </section>
+
+      <div class="shell">
+        <section class="metrics" aria-label="Headline findings">
+          <div class="metric">
+            <span class="metric-value">44.95%</span>
+            <span class="metric-label">Average daily notional reported through FINRA TRFs</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">68.63%</span>
+            <span class="metric-label">Top-three share of annual on-exchange notional</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">−3.34 pp</span>
+            <span class="metric-label">Off-exchange share difference on top-decile activity days</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="section">
+        <div class="shell content-grid">
+          <div class="prose">
+            <p class="eyebrow">The question</p>
+            <h2>Where is US equity liquidity, and when does the mix change?</h2>
+            <p>
+              Cboe publishes daily shares, notional value and trade count for US equity exchanges and
+              FINRA Trade Reporting Facilities, split by Tape A, B and C. I use notional as the primary
+              measure of risk transferred, then compare it with shares and trades so the result is not
+              driven by a single denominator.
+            </p>
+            <p>
+              The first control is deliberately operational: every participant must map to either an
+              exchange or a TRF, each venue-day must be unique, and the three tape notionals must reconcile
+              to the published total. A new or renamed venue stops the notebook instead of silently falling
+              out of the analysis.
+            </p>
+            <div class="callout">
+              <h3>Why the denominator matters</h3>
+              <p>
+                Off-exchange activity averaged 45.0% of notional, 50.7% of shares and 41.1% of trades.
+                That difference is a useful clue about the mix of security prices and trade sizes, not proof
+                of any one execution mechanism.
+              </p>
+            </div>
+          </div>
+          <figure class="figure-card">
+            <img src="../assets/images/us_market_overview.png" alt="Daily US equity notional and off-exchange notional share during 2025">
+            <figcaption>Daily market notional and reported off-exchange share, with a 20-session average.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="shell content-grid reverse">
+          <figure class="figure-card">
+            <img src="../assets/images/us_tape_structure.png" alt="Heatmap comparing on-exchange notional market share by venue for Tape A, Tape B and Tape C">
+            <figcaption>Share of annual on-exchange notional within each listing tape.</figcaption>
+          </figure>
+          <div class="prose">
+            <p class="eyebrow">Venue fit</p>
+            <h2>One market-share number hides three different contests</h2>
+            <p>
+              The largest exchanges account for most displayed activity, but leadership changes with the
+              listing universe. NYSE leads Tape A, NYSE Arca leads Tape B and Nasdaq leads Tape C.
+            </p>
+            <p>
+              For liquidity expansion, broker discussions or connectivity prioritisation, the relevant
+              question is not simply “Which venue is largest?” It is “Which venue matters for the symbols,
+              sessions and execution workflows in scope?”
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell content-grid">
+          <div class="prose">
+            <p class="eyebrow">Liquidity regimes</p>
+            <h2>Peak-activity sessions look structurally different</h2>
+            <p>
+              I define the top 10% of sessions by total notional and compare them with the remaining days.
+              Off-exchange share is 3.34 percentage points lower on those 25 sessions. The bootstrap 95%
+              interval is −4.23 to −2.48 percentage points.
+            </p>
+            <p>
+              At the same time, on-exchange HHI is about 188 points higher and the effective number of
+              exchanges falls. This is consistent with more activity concentrating in primary or auction
+              venues on busy dates. The daily source cannot identify auction prints, so that mechanism remains
+              a test for intraday and order-level data.
+            </p>
+          </div>
+          <figure class="figure-card">
+            <img src="../assets/images/us_activity_regimes.png" alt="Box plots comparing off-exchange share and exchange concentration on high-activity sessions and other sessions">
+            <figcaption>Top-decile notional sessions versus all other 2025 sessions.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="shell content-grid reverse">
+          <figure class="figure-card">
+            <img src="../assets/images/us_share_shifts.png" alt="Horizontal bar chart of the largest exchange market-share changes between the first and fourth quarters of 2025">
+            <figcaption>Change in average daily on-exchange notional share from Q1 to Q4.</figcaption>
+          </figure>
+          <div class="prose">
+            <p class="eyebrow">Monitoring output</p>
+            <h2>Separate persistent shifts from daily noise</h2>
+            <p>
+              Nasdaq and NYSE Arca gained the most share between Q1 and Q4, while NYSE and EDGX declined.
+              The notebook also compares each venue's latest daily share with its prior 20-session mean and
+              volatility.
+            </p>
+            <p>
+              That combination gives a slower roadmap view and a faster investigation queue. It does not
+              label a move “good” or “bad”; it identifies where to ask what changed in routing, fee tiers,
+              auctions, client flow or venue functionality.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section dark-section">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Decision use</p>
+              <h2>What I would take to a liquidity forum</h2>
+            </div>
+            <p>
+              The value of the analysis is the follow-up it enables: where to focus execution data,
+              which external questions to ask and how to distinguish a market-wide regime from a client-specific issue.
+            </p>
+          </div>
+          <div class="decision-grid">
+            <article class="decision-card">
+              <span>Market context</span>
+              <h3>Use more than one activity measure</h3>
+              <p>Report notional, shares and trade count together when the denominator changes the conclusion.</p>
+            </article>
+            <article class="decision-card">
+              <span>Venue expansion</span>
+              <h3>Prioritise by security universe</h3>
+              <p>Assess venue relevance by tape and symbol mix before investing in coverage or connectivity.</p>
+            </article>
+            <article class="decision-card">
+              <span>Execution review</span>
+              <h3>Control for activity regime</h3>
+              <p>Benchmark broker and venue outcomes separately on peak-volume or auction-heavy sessions.</p>
+            </article>
+            <article class="decision-card">
+              <span>External dialogue</span>
+              <h3>Turn shifts into specific questions</h3>
+              <p>Use the share monitor to focus discussions on a defined venue, period and possible driver.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section compact">
+        <div class="shell content-grid">
+          <div class="prose">
+            <p class="eyebrow">Limits</p>
+            <h2>What this dataset cannot answer</h2>
+            <p>
+              A TRF record shows an off-exchange report; it does not identify whether the execution occurred
+              at an ATS, wholesaler or another broker-dealer. Daily aggregates cannot measure spread, fill rate,
+              queue position, price improvement, markout, market impact or latency. HHI is a concentration
+              measure, not an execution-quality score.
+            </p>
+            <p>
+              The next step would join internal child-order and fill data to venue, broker, quote, auction and
+              event-calendar features. That would test whether the market-wide signals explain actual execution outcomes.
+            </p>
+          </div>
+          <div class="prose">
+            <p class="eyebrow">Sources</p>
+            <ul class="source-list">
+              <li><a href="https://www.cboe.com/markets/us/equities/market-statistics/historical-market-volume/">Cboe historical market volume</a><br>Daily market-centre activity by tape, based on UTDF and CTS consolidated feeds.</li>
+              <li><a href="https://www.sec.gov/rules-regulations/2005/06/regulation-nms">SEC Regulation NMS</a><br>Context for access, quotations, market data and competition among trading centres.</li>
+              <li><a href="https://www.finra.org/investors/insights/where-do-stocks-trade">FINRA: Where Do Stocks Trade?</a><br>Context for exchanges, alternative trading systems and off-exchange reporting.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <p>Public-data research for portfolio demonstration. No employer or client data is used.</p>
+        <div class="footer-links">
+          <a href="../index.html">Portfolio</a>
+          <a href="https://github.com/afsar20">GitHub</a>
+          <a href="volatility-surface.html">Next project</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
