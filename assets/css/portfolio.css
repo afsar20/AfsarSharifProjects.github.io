@@ -515,10 +515,6 @@ h3 {
   grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
 }
 
-.content-grid.production-grid {
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
-}
-
 .prose h2 {
   margin-bottom: 22px;
   font-size: clamp(32px, 4vw, 48px);
@@ -614,8 +610,51 @@ h3 {
   color: var(--ink-soft);
 }
 
-.production-list strong {
-  color: var(--ink);
+.production-heading {
+  margin: 0 0 22px;
+}
+
+.production-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.production-control {
+  padding: 25px 27px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.production-control h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.production-control p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.run-panel {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.6fr) minmax(0, 1.4fr);
+  gap: 54px;
+  align-items: start;
+  margin-top: 54px;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+.run-panel h3 {
+  margin-bottom: 0;
+}
+
+.run-panel .source-list {
+  margin: 0;
 }
 
 .dark-section {
@@ -715,7 +754,7 @@ h3 {
   .section-heading,
   .content-grid,
   .content-grid.reverse,
-  .content-grid.production-grid {
+  .run-panel {
     grid-template-columns: 1fr;
     gap: 34px;
   }
@@ -727,7 +766,8 @@ h3 {
 
   .project-grid,
   .decision-grid,
-  .statistics-explainer {
+  .statistics-explainer,
+  .production-control-grid {
     grid-template-columns: 1fr;
   }
 

@@ -163,34 +163,52 @@
       </section>
 
       <section class="section compact">
-        <div class="shell content-grid production-grid">
-          <div class="prose">
-            <p class="eyebrow">Limits</p>
-            <h2>What would change in a production surface</h2>
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Limits</p>
+              <h2>What would change in a production surface</h2>
+            </div>
             <p>
               This is a visual research tool, not a fully calibrated pricing surface. It uses strike rather than
               forward moneyness, does not fit a parametric model, and does not explicitly adjust for rates or
-              dividends. The saved example is short dated and sparse; edge values are interpolated where the
-              final strike is unavailable for an expiry.
+              dividends. The saved example is short dated and sparse, with some edge values interpolated.
             </p>
-            <h3>Production controls and why they matter</h3>
-            <ul class="production-list">
-              <li><strong>Quote quality filters:</strong> remove observations with missing prices, very wide spreads
-                or insufficient size so unreliable quotes do not distort the surface.</li>
-              <li><strong>Bid and ask implied volatility:</strong> calculate volatility from both sides of the quote.
-                The gap shows the uncertainty and transaction cost hidden by a single model value.</li>
-              <li><strong>Forward normalisation:</strong> compare each strike with the forward price for its expiry,
-                using rates and expected dividends. This makes smiles across different maturities comparable.</li>
-              <li><strong>Arbitrage checks:</strong> test whether option prices remain logically ordered across strikes
-                and expiries. This identifies inputs or fitted shapes that imply impossible trading relationships.</li>
-              <li><strong>SVI calibration:</strong> fit a smooth parametric curve to implied variance for each expiry.
-                This reduces quote noise and provides more stable interpolation between observed strikes.</li>
-              <li><strong>Market state monitoring:</strong> reject stale quotes and crossed markets, where the bid is
-                above the ask, so the surface uses current and internally consistent observations.</li>
-            </ul>
           </div>
-          <div class="prose">
-            <p class="eyebrow">Run requirements</p>
+
+          <h3 class="production-heading">Production controls and why they matter</h3>
+          <div class="production-control-grid">
+            <article class="production-control">
+              <h3>Quote quality filters</h3>
+              <p>Remove observations with missing prices, very wide spreads or insufficient size so unreliable quotes do not distort the surface.</p>
+            </article>
+            <article class="production-control">
+              <h3>Bid and ask implied volatility</h3>
+              <p>Calculate volatility from both sides of the quote. The gap shows the uncertainty and transaction cost hidden by a single model value.</p>
+            </article>
+            <article class="production-control">
+              <h3>Forward normalisation</h3>
+              <p>Compare each strike with the forward price for its expiry, using rates and expected dividends. This makes different maturities comparable.</p>
+            </article>
+            <article class="production-control">
+              <h3>Arbitrage checks</h3>
+              <p>Test whether option prices remain logically ordered across strikes and expiries, identifying inputs or fitted shapes that imply impossible relationships.</p>
+            </article>
+            <article class="production-control">
+              <h3>SVI calibration</h3>
+              <p>Fit a smooth parametric curve to implied variance for each expiry, reducing quote noise and improving interpolation between observed strikes.</p>
+            </article>
+            <article class="production-control">
+              <h3>Market state monitoring</h3>
+              <p>Reject stale quotes and crossed markets, where the bid is above the ask, so the surface uses current and internally consistent observations.</p>
+            </article>
+          </div>
+
+          <div class="run-panel">
+            <div>
+              <p class="eyebrow">Run requirements</p>
+              <h3>What is needed to reproduce it</h3>
+            </div>
             <ul class="source-list">
               <li>Interactive Brokers Trader Workstation or IB Gateway running locally.</li>
               <li>API connections enabled and the appropriate US equity and options market data subscriptions.</li>
