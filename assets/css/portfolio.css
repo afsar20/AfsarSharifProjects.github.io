@@ -190,6 +190,8 @@ h3 {
 }
 
 .hero-aside {
+  display: grid;
+  gap: 26px;
   padding: 24px 0 2px 26px;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -205,6 +207,11 @@ h3 {
   color: white;
   font-size: 18px;
   font-weight: 680;
+}
+
+.summary-item {
+  display: grid;
+  gap: 3px;
 }
 
 .hero-actions,
@@ -582,6 +589,18 @@ h3 {
   color: var(--ink-soft);
 }
 
+.callout p + p {
+  margin-top: 16px;
+}
+
+.statistical-note {
+  margin: 28px 0;
+}
+
+.production-list strong {
+  color: var(--ink);
+}
+
 .dark-section {
   background: var(--navy);
   color: white;
@@ -656,6 +675,10 @@ h3 {
 .footer-grid p {
   margin: 0;
   font-size: 13px;
+}
+
+.footer-grid-links {
+  justify-content: flex-end;
 }
 
 .footer-links {

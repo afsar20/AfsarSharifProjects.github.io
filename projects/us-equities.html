@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="US equity liquidity intelligence using Cboe daily market-volume data: off-exchange activity, venue concentration, tape leadership and share shifts.">
+    <meta name="description" content="US equity liquidity intelligence using Cboe daily market volume data: off exchange activity, venue concentration, tape leadership and share shifts.">
     <title>US Equities Liquidity Intelligence | Afsar Sharif</title>
     <link rel="stylesheet" href="../assets/css/portfolio.css">
   </head>
@@ -29,7 +29,7 @@
           <p class="eyebrow">Liquidity intelligence · 2025 public data</p>
           <h1>US Equities Liquidity Intelligence</h1>
           <p class="lede">
-            A compact study of exchange and off-exchange activity, venue specialisation and liquidity regimes,
+            A compact study of exchange and off exchange activity, venue specialisation and liquidity regimes,
             built to support the questions a trading or liquidity forum should ask next.
           </p>
           <div class="hero-actions">
@@ -48,11 +48,11 @@
           </div>
           <div class="metric">
             <span class="metric-value">68.63%</span>
-            <span class="metric-label">Top-three share of annual on-exchange notional</span>
+            <span class="metric-label">Top three share of annual on exchange notional</span>
           </div>
           <div class="metric">
             <span class="metric-value">−3.34 pp</span>
-            <span class="metric-label">Off-exchange share difference on top-decile activity days</span>
+            <span class="metric-label">Off exchange share difference on top decile activity days</span>
           </div>
         </section>
       </div>
@@ -70,22 +70,22 @@
             </p>
             <p>
               The first control is deliberately operational: every participant must map to either an
-              exchange or a TRF, each venue-day must be unique, and the three tape notionals must reconcile
+              exchange or a TRF, each record for a venue and day must be unique, and the three tape notionals must reconcile
               to the published total. A new or renamed venue stops the notebook instead of silently falling
               out of the analysis.
             </p>
             <div class="callout">
               <h3>Why the denominator matters</h3>
               <p>
-                Off-exchange activity averaged 45.0% of notional, 50.7% of shares and 41.1% of trades.
+                Off exchange activity averaged 45.0% of notional, 50.7% of shares and 41.1% of trades.
                 That difference is a useful clue about the mix of security prices and trade sizes, not proof
                 of any one execution mechanism.
               </p>
             </div>
           </div>
           <figure class="figure-card">
-            <img src="../assets/images/us_market_overview.png" alt="Daily US equity notional and off-exchange notional share during 2025">
-            <figcaption>Daily market notional and reported off-exchange share, with a 20-session average.</figcaption>
+            <img src="../assets/images/us_market_overview.png" alt="Daily US equity notional and off exchange notional share during 2025">
+            <figcaption>Daily market notional and reported off exchange share, with a 20 session average.</figcaption>
           </figure>
         </div>
       </section>
@@ -93,12 +93,12 @@
       <section class="section compact">
         <div class="shell content-grid reverse">
           <figure class="figure-card">
-            <img src="../assets/images/us_tape_structure.png" alt="Heatmap comparing on-exchange notional market share by venue for Tape A, Tape B and Tape C">
-            <figcaption>Share of annual on-exchange notional within each listing tape.</figcaption>
+            <img src="../assets/images/us_tape_structure.png" alt="Heatmap comparing on exchange notional market share by venue for Tape A, Tape B and Tape C">
+            <figcaption>Share of annual on exchange notional within each listing tape.</figcaption>
           </figure>
           <div class="prose">
             <p class="eyebrow">Venue fit</p>
-            <h2>One market-share number hides three different contests</h2>
+            <h2>One market share number hides three different contests</h2>
             <p>
               The largest exchanges account for most displayed activity, but leadership changes with the
               listing universe. NYSE leads Tape A, NYSE Arca leads Tape B and Nasdaq leads Tape C.
@@ -116,22 +116,36 @@
         <div class="shell content-grid">
           <div class="prose">
             <p class="eyebrow">Liquidity regimes</p>
-            <h2>Peak-activity sessions look structurally different</h2>
+            <h2>Busy sessions concentrate liquidity on exchanges</h2>
             <p>
-              I define the top 10% of sessions by total notional and compare them with the remaining days.
-              Off-exchange share is 3.34 percentage points lower on those 25 sessions. The bootstrap 95%
-              interval is −4.23 to −2.48 percentage points.
+              I define peak activity as the 25 sessions in the top 10% by total notional and compare them
+              with the other 225 days. Off exchange share was 3.34 percentage points lower on those busy sessions.
             </p>
+            <div class="callout statistical-note">
+              <h3>How to read the statistics</h3>
+              <p>
+                <strong>Bootstrap 95% interval:</strong> I repeatedly resampled the trading days and recalculated
+                the difference. The central 95% of those estimates ranged from −4.23 to −2.48 percentage points.
+                Because the whole interval is below zero, the estimated difference keeps the same direction under
+                resampling. It does not prove what caused the difference or guarantee the same result in another year.
+              </p>
+              <p>
+                <strong>HHI:</strong> The Herfindahl Hirschman Index measures concentration by squaring each
+                exchange's percentage market share and adding the results. It reaches 10,000 if one exchange has
+                all activity, while lower values indicate a more even distribution. The effective number of exchanges,
+                calculated as 10,000 divided by HHI, expresses this as the equivalent number of equally sized venues.
+              </p>
+            </div>
             <p>
-              At the same time, on-exchange HHI is about 188 points higher and the effective number of
-              exchanges falls. This is consistent with more activity concentrating in primary or auction
-              venues on busy dates. The daily source cannot identify auction prints, so that mechanism remains
-              a test for intraday and order-level data.
+              On peak activity days, on exchange HHI was about 188 points higher and the effective number of
+              exchanges fell. Together, these measures indicate that trading became more concentrated in a
+              smaller group of exchanges. Primary or auction venues may contribute to the pattern, but the daily
+              data cannot identify auction prints. Confirming the cause would require intraday or order level data.
             </p>
           </div>
           <figure class="figure-card">
-            <img src="../assets/images/us_activity_regimes.png" alt="Box plots comparing off-exchange share and exchange concentration on high-activity sessions and other sessions">
-            <figcaption>Top-decile notional sessions versus all other 2025 sessions.</figcaption>
+            <img src="../assets/images/us_activity_regimes.png" alt="Box plots comparing off exchange share and exchange concentration on high activity sessions and other sessions">
+            <figcaption>Top decile notional sessions versus all other 2025 sessions.</figcaption>
           </figure>
         </div>
       </section>
@@ -139,15 +153,15 @@
       <section class="section compact">
         <div class="shell content-grid reverse">
           <figure class="figure-card">
-            <img src="../assets/images/us_share_shifts.png" alt="Horizontal bar chart of the largest exchange market-share changes between the first and fourth quarters of 2025">
-            <figcaption>Change in average daily on-exchange notional share from Q1 to Q4.</figcaption>
+            <img src="../assets/images/us_share_shifts.png" alt="Horizontal bar chart of the largest exchange market share changes between the first and fourth quarters of 2025">
+            <figcaption>Change in average daily on exchange notional share from Q1 to Q4.</figcaption>
           </figure>
           <div class="prose">
             <p class="eyebrow">Monitoring output</p>
             <h2>Separate persistent shifts from daily noise</h2>
             <p>
               Nasdaq and NYSE Arca gained the most share between Q1 and Q4, while NYSE and EDGX declined.
-              The notebook also compares each venue's latest daily share with its prior 20-session mean and
+              The notebook also compares each venue's latest daily share with its prior 20 session mean and
               volatility.
             </p>
             <p>
@@ -167,8 +181,8 @@
               <h2>What I would take to a liquidity forum</h2>
             </div>
             <p>
-              The value of the analysis is the follow-up it enables: where to focus execution data,
-              which external questions to ask and how to distinguish a market-wide regime from a client-specific issue.
+              The value of the analysis is the next set of questions it enables: where to focus execution data,
+              which external questions to ask and how to distinguish a market wide regime from an issue specific to one client.
             </p>
           </div>
           <div class="decision-grid">
@@ -185,7 +199,7 @@
             <article class="decision-card">
               <span>Execution review</span>
               <h3>Control for activity regime</h3>
-              <p>Benchmark broker and venue outcomes separately on peak-volume or auction-heavy sessions.</p>
+              <p>Benchmark broker and venue outcomes separately on peak volume sessions or days with heavy auction activity.</p>
             </article>
             <article class="decision-card">
               <span>External dialogue</span>
@@ -202,22 +216,22 @@
             <p class="eyebrow">Limits</p>
             <h2>What this dataset cannot answer</h2>
             <p>
-              A TRF record shows an off-exchange report; it does not identify whether the execution occurred
-              at an ATS, wholesaler or another broker-dealer. Daily aggregates cannot measure spread, fill rate,
+              A TRF record shows an off exchange report; it does not identify whether the execution occurred
+              at an ATS, wholesaler or another broker. Daily aggregates cannot measure spread, fill rate,
               queue position, price improvement, markout, market impact or latency. HHI is a concentration
-              measure, not an execution-quality score.
+              measure, not an execution quality score.
             </p>
             <p>
-              The next step would join internal child-order and fill data to venue, broker, quote, auction and
-              event-calendar features. That would test whether the market-wide signals explain actual execution outcomes.
+              The next step would join internal child order and fill data to venue, broker, quote, auction and
+              event calendar features. That would test whether the market wide signals explain actual execution outcomes.
             </p>
           </div>
           <div class="prose">
             <p class="eyebrow">Sources</p>
             <ul class="source-list">
-              <li><a href="https://www.cboe.com/markets/us/equities/market-statistics/historical-market-volume/">Cboe historical market volume</a><br>Daily market-centre activity by tape, based on UTDF and CTS consolidated feeds.</li>
+              <li><a href="https://www.cboe.com/markets/us/equities/market-statistics/historical-market-volume/">Cboe historical market volume</a><br>Daily market centre activity by tape, based on UTDF and CTS consolidated feeds.</li>
               <li><a href="https://www.sec.gov/rules-regulations/2005/06/regulation-nms">SEC Regulation NMS</a><br>Context for access, quotations, market data and competition among trading centres.</li>
-              <li><a href="https://www.finra.org/investors/insights/where-do-stocks-trade">FINRA: Where Do Stocks Trade?</a><br>Context for exchanges, alternative trading systems and off-exchange reporting.</li>
+              <li><a href="https://www.finra.org/investors/insights/where-do-stocks-trade">FINRA: Where Do Stocks Trade?</a><br>Context for exchanges, alternative trading systems and off exchange reporting.</li>
             </ul>
           </div>
         </div>
@@ -226,7 +240,7 @@
 
     <footer class="site-footer">
       <div class="shell footer-grid">
-        <p>Public-data research for portfolio demonstration. No employer or client data is used.</p>
+        <p>Public data research for portfolio demonstration. No employer or client data is used.</p>
         <div class="footer-links">
           <a href="../index.html">Portfolio</a>
           <a href="https://github.com/afsar20">GitHub</a>

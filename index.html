@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Afsar Sharif's market structure and quantitative finance portfolio: US equity liquidity intelligence and an SPY implied-volatility surface.">
+    <meta name="description" content="Afsar Sharif's market structure and execution consulting portfolio: US equity liquidity intelligence and an SPY implied volatility surface.">
     <title>Afsar Sharif | Market Structure Portfolio</title>
     <link rel="stylesheet" href="assets/css/portfolio.css">
   </head>
@@ -16,7 +16,7 @@
         </a>
         <ul class="nav-links">
           <li><a href="#work">Selected work</a></li>
-          <li><a href="#approach">Approach</a></li>
+          <li><a href="#approach">Project structure</a></li>
           <li><a href="https://github.com/afsar20">GitHub</a></li>
         </ul>
       </nav>
@@ -26,10 +26,10 @@
       <section class="hero">
         <div class="shell hero-grid">
           <div>
-            <p class="eyebrow">Market structure · liquidity · quantitative research</p>
+            <p class="eyebrow">Market structure · liquidity · execution consulting</p>
             <h1>Turning trading data into clear decisions.</h1>
             <p class="hero-copy">
-              I work across equity-market structure, execution analytics and liquidity intelligence.
+              I work across equity market structure, execution analytics and liquidity intelligence.
               These projects show how I frame a market question, validate the data and turn the result
               into a useful monitoring or product decision.
             </p>
@@ -39,12 +39,18 @@
             </div>
           </div>
           <aside class="hero-aside" aria-label="Profile summary">
-            <p>Focus</p>
-            <strong>Equity liquidity and execution</strong>
-            <p>Tools</p>
-            <strong>Python · SQL · Snowflake · Tableau</strong>
-            <p>Location</p>
-            <strong>London, United Kingdom</strong>
+            <div class="summary-item">
+              <p>Focus</p>
+              <strong>Equity liquidity and execution</strong>
+            </div>
+            <div class="summary-item">
+              <p>Tools</p>
+              <strong>Python · SQL · Snowflake · Tableau</strong>
+            </div>
+            <div class="summary-item">
+              <p>Location</p>
+              <strong>London, United Kingdom</strong>
+            </div>
           </aside>
         </div>
       </section>
@@ -54,11 +60,12 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Selected work</p>
-              <h2>Two focused market studies</h2>
+              <h2>Selected market projects</h2>
             </div>
             <p>
-              Each project is deliberately compact. The emphasis is on a defensible question,
-              transparent methodology and an output that could support a real trading or liquidity discussion.
+              I am building this portfolio to show how I approach market structure, liquidity and
+              execution questions in practice. Each project explains the question, analysis and conclusion
+              clearly, with the supporting code available for review.
             </p>
           </div>
 
@@ -66,7 +73,7 @@
             <article class="project-card">
               <a class="project-media" href="projects/us-equities.html" aria-label="Open US Equities Liquidity Intelligence">
                 <span class="project-number">01</span>
-                <img src="assets/images/us_market_overview.png" alt="US equity daily notional and off-exchange share chart">
+                <img src="assets/images/us_market_overview.png" alt="US equity daily notional and off exchange share chart">
               </a>
               <div class="project-body">
                 <ul class="tag-list" aria-label="Project skills">
@@ -77,8 +84,8 @@
                 </ul>
                 <h3>US Equities Liquidity Intelligence</h3>
                 <p>
-                  A 2025 view of exchange and off-exchange activity, tape-specific venue leadership,
-                  concentration on peak-volume sessions and a practical venue-share monitor.
+                  A 2025 view of exchange and off exchange activity, venue leadership by tape,
+                  concentration on peak volume sessions and a practical venue share monitor.
                 </p>
                 <div class="card-actions">
                   <a class="text-link" href="projects/us-equities.html">Read the analysis</a>
@@ -87,9 +94,9 @@
             </article>
 
             <article class="project-card">
-              <a class="project-media" href="projects/volatility-surface.html" aria-label="Open SPY Implied-Volatility Surface">
+              <a class="project-media" href="projects/volatility-surface.html" aria-label="Open SPY Implied Volatility Surface">
                 <span class="project-number">02</span>
-                <img src="assets/images/volatility_surface.png" alt="Three-dimensional SPY implied-volatility surface and skew chart">
+                <img src="assets/images/volatility_surface.png" alt="3D SPY implied volatility surface and skew chart">
               </a>
               <div class="project-body">
                 <ul class="tag-list" aria-label="Project skills">
@@ -98,10 +105,10 @@
                   <li>Live data</li>
                   <li>Visualisation</li>
                 </ul>
-                <h3>SPY Implied-Volatility Surface</h3>
+                <h3>SPY Implied Volatility Surface</h3>
                 <p>
-                  A live-data workflow that resolves an option chain, captures model implied volatility
-                  and produces a reproducible surface and front-expiry skew view.
+                  A live market data workflow that resolves an option chain, captures model implied volatility
+                  and produces a reproducible surface and front expiry skew view.
                 </p>
                 <div class="card-actions">
                   <a class="text-link" href="projects/volatility-surface.html">Read the analysis</a>
@@ -116,34 +123,34 @@
         <div class="shell">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Working method</p>
-              <h2>Research that can survive scrutiny</h2>
+              <p class="eyebrow">Project structure</p>
+              <h2>Clear analysis from question to conclusion</h2>
             </div>
             <p>
-              I keep the analysis traceable from the source through to the conclusion, and separate
-              what the data shows from what needs a deeper execution-level investigation.
+              Each project follows the same simple structure so a reader can quickly understand the
+              question, the data, the analysis and the practical takeaway.
             </p>
           </div>
           <div class="process-grid">
             <article class="process-step">
               <span>01</span>
-              <h3>Frame the decision</h3>
-              <p>Start with the liquidity, execution or product question rather than a list of available fields.</p>
+              <h3>The question</h3>
+              <p>A short explanation of the market, liquidity or execution problem being investigated.</p>
             </article>
             <article class="process-step">
               <span>02</span>
-              <h3>Validate the source</h3>
-              <p>Make schema changes, missing mappings and reconciliation failures visible before analysing.</p>
+              <h3>The data</h3>
+              <p>What the source contains, how it is checked and what it cannot show.</p>
             </article>
             <article class="process-step">
               <span>03</span>
-              <h3>Test the signal</h3>
-              <p>Use comparable baselines and simple statistics that a technical or commercial audience can challenge.</p>
+              <h3>The analysis</h3>
+              <p>Charts and statistics focused on the main finding without unnecessary technical detail.</p>
             </article>
             <article class="process-step">
               <span>04</span>
-              <h3>State the limits</h3>
-              <p>Distinguish a useful monitoring signal from a causal execution-quality conclusion.</p>
+              <h3>The takeaway</h3>
+              <p>What the result means, why it matters and what should be investigated next.</p>
             </article>
           </div>
         </div>
@@ -155,15 +162,14 @@
           <div class="archive" aria-label="Earlier project links">
             <a href="https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb">Movie revenue correlation</a>
             <a href="https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql">COVID-19 SQL exploration</a>
-            <a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql">Housing-data cleaning</a>
+            <a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql">Housing data cleaning</a>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div class="shell footer-grid">
-        <p>© 2026 Afsar Sharif. Analysis uses public or user-generated data.</p>
+      <div class="shell footer-grid footer-grid-links">
         <div class="footer-links">
           <a href="https://github.com/afsar20">GitHub</a>
           <a href="https://www.linkedin.com/in/afsar-sharif-75ba42143/">LinkedIn</a>

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A live SPY implied-volatility surface built with the Interactive Brokers API, snapshot capture and reproducible offline rendering.">
-    <title>SPY Implied-Volatility Surface | Afsar Sharif</title>
+    <meta name="description" content="A live SPY implied volatility surface built with the Interactive Brokers API, snapshot capture and reproducible offline rendering.">
+    <title>SPY Implied Volatility Surface | Afsar Sharif</title>
     <link rel="stylesheet" href="../assets/css/portfolio.css">
   </head>
   <body>
@@ -27,9 +27,9 @@
         <div class="shell">
           <div class="breadcrumbs"><a href="../index.html">Portfolio</a> / Volatility surface</div>
           <p class="eyebrow">US options · live market data · Python</p>
-          <h1>SPY Implied-Volatility Surface</h1>
+          <h1>SPY Implied Volatility Surface</h1>
           <p class="lede">
-            A small end-to-end market-data application: resolve the option chain, request model implied
+            A complete market data application: resolve the option chain, request model implied
             volatility, capture timestamped snapshots and recreate the surface offline.
           </p>
           <div class="hero-actions">
@@ -43,7 +43,7 @@
         <section class="metrics" aria-label="Snapshot coverage">
           <div class="metric">
             <span class="metric-value">4</span>
-            <span class="metric-label">Short-dated expiries in the saved surface</span>
+            <span class="metric-label">Short dated expiries in the saved surface</span>
           </div>
           <div class="metric">
             <span class="metric-value">9</span>
@@ -51,7 +51,7 @@
           </div>
           <div class="metric">
             <span class="metric-value">15</span>
-            <span class="metric-label">Timestamped observations across a 30-second capture</span>
+            <span class="metric-label">Timestamped observations across a 30 second capture</span>
           </div>
         </section>
       </div>
@@ -63,25 +63,24 @@
             <h2>From a live chain to a repeatable research snapshot</h2>
             <p>
               The application connects to a locally running Interactive Brokers Trader Workstation or
-              Gateway session. It resolves the SPY underlying contract, retrieves the SMART option-chain
-              definition and selects the next four expiries with up to nine strikes within roughly 6% of spot.
+              Gateway session. It first resolves the SPY contract and retrieves the option chain that IBKR
+              labels SMART. SMART is IBKR's aggregated routing destination, allowing an eligible option contract
+              to be routed across supported exchanges instead of tying it to one venue.
             </p>
             <p>
-              To focus on the more liquid out-of-the-money side, the grid requests puts below spot and calls
-              at or above spot. IBKR model implied volatility is collected asynchronously, while contract-level
-              events prevent missing definitions from blocking the entire chain.
+              From that chain, the program selects the next four expiries and up to nine strikes between 94%
+              and 106% of the current SPY price. This creates a manageable grid centred near spot rather than
+              requesting every listed contract. It uses puts below spot and calls at or above spot to focus on
+              the out of the money side of the smile.
             </p>
-            <div class="callout">
-              <h3>Why save the snapshot?</h3>
-              <p>
-                Separating collection from analysis makes the result reproducible. A reviewer can inspect the
-                exact inputs, rerun the plot without a live market connection and distinguish a data issue from
-                a visualisation issue.
-              </p>
-            </div>
+            <p>
+              IBKR returns contract details and model implied volatility through callbacks as each response
+              becomes available. Request IDs link every observation back to its expiry, strike and option type,
+              while completion events allow unavailable contracts to be skipped without blocking the rest of the grid.
+            </p>
           </div>
           <figure class="figure-card dark">
-            <img src="../assets/images/volatility_surface.png" alt="SPY implied-volatility surface across strike and expiry with a front-expiry skew chart">
+            <img src="../assets/images/volatility_surface.png" alt="SPY implied volatility surface across strike and expiry with a front expiry skew chart">
             <figcaption>Latest observation in the saved sample. Gaps are interpolated for display only.</figcaption>
           </figure>
         </div>
@@ -92,11 +91,11 @@
           <div class="section-heading">
             <div>
               <p class="eyebrow">Data flow</p>
-              <h2>A small event-driven pipeline</h2>
+              <h2>A simple pipeline built around callbacks</h2>
             </div>
             <p>
-              Interactive Brokers callbacks arrive asynchronously, so the application keeps contract metadata,
-              request IDs and observations separate before joining them for the surface.
+              Interactive Brokers returns contract details and market data through separate callbacks. The application
+              stores contract metadata, request IDs and observations separately, then joins them into the surface.
             </p>
           </div>
           <div class="process-grid">
@@ -113,7 +112,7 @@
             <article class="process-step">
               <span>03</span>
               <h3>Collect</h3>
-              <p>Map option-computation callbacks to expiry, strike and right.</p>
+              <p>Map option computation callbacks to expiry, strike and right.</p>
             </article>
             <article class="process-step">
               <span>04</span>
@@ -130,23 +129,23 @@
             <div class="callout">
               <h3>Surface interpretation</h3>
               <p>
-                The sample shows a pronounced short-dated smile with higher implied volatility away from spot.
-                The chart is useful for inspecting shape and data coverage, not for pricing or relative-value trading.
+                The sample shows a pronounced short dated smile with higher implied volatility away from spot.
+                The chart is useful for inspecting shape and data coverage, not for pricing or relative value trading.
               </p>
             </div>
             <div class="callout">
               <h3>Operational controls</h3>
               <p>
-                Timeouts, contract-resolution events, data-mode reporting and a saved-snapshot fallback make
+                Timeouts, contract resolution events, data mode reporting and a saved snapshot fallback make
                 failure states visible and keep the desktop display from being the only record of the result.
               </p>
             </div>
           </div>
           <div class="prose">
             <p class="eyebrow">What the project demonstrates</p>
-            <h2>Market-data handling, not just a 3D chart</h2>
+            <h2>Market data handling, not just a 3D chart</h2>
             <ul>
-              <li>Contract discovery and request orchestration through an asynchronous broker API.</li>
+              <li>Contract discovery and coordinated requests through IBKR's callback based API.</li>
               <li>A stable mapping between request IDs and option attributes.</li>
               <li>Separation of live collection, persistence and offline research.</li>
               <li>Validation of required fields and minimum grid dimensions before rendering.</li>
@@ -167,21 +166,32 @@
             <p class="eyebrow">Limits</p>
             <h2>What would change in a production surface</h2>
             <p>
-              This is a visual research tool, not an arbitrage-free calibration. It uses strike rather than
+              This is a visual research tool, not a fully calibrated pricing surface. It uses strike rather than
               forward moneyness, does not fit a parametric model, and does not explicitly adjust for rates or
-              dividends. The saved example is short-dated and sparse; edge values are interpolated where the
+              dividends. The saved example is short dated and sparse; edge values are interpolated where the
               final strike is unavailable for an expiry.
             </p>
-            <p>
-              A production version would add quote-quality filters, bid/ask-aware IVs, forward normalisation,
-              no-arbitrage checks, a calibrated model such as SVI, and monitoring for stale or crossed markets.
-            </p>
+            <h3>Production controls and why they matter</h3>
+            <ul class="production-list">
+              <li><strong>Quote quality filters:</strong> remove observations with missing prices, very wide spreads
+                or insufficient size so unreliable quotes do not distort the surface.</li>
+              <li><strong>Bid and ask implied volatility:</strong> calculate volatility from both sides of the quote.
+                The gap shows the uncertainty and transaction cost hidden by a single model value.</li>
+              <li><strong>Forward normalisation:</strong> compare each strike with the forward price for its expiry,
+                using rates and expected dividends. This makes smiles across different maturities comparable.</li>
+              <li><strong>Arbitrage checks:</strong> test whether option prices remain logically ordered across strikes
+                and expiries. This identifies inputs or fitted shapes that imply impossible trading relationships.</li>
+              <li><strong>SVI calibration:</strong> fit a smooth parametric curve to implied variance for each expiry.
+                This reduces quote noise and provides more stable interpolation between observed strikes.</li>
+              <li><strong>Market state monitoring:</strong> reject stale quotes and crossed markets, where the bid is
+                above the ask, so the surface uses current and internally consistent observations.</li>
+            </ul>
           </div>
           <div class="prose">
             <p class="eyebrow">Run requirements</p>
             <ul class="source-list">
               <li>Interactive Brokers Trader Workstation or IB Gateway running locally.</li>
-              <li>API connections enabled and the appropriate US equity and options market-data subscriptions.</li>
+              <li>API connections enabled and the appropriate US equity and options market data subscriptions.</li>
               <li>Python packages listed in the repository's <a href="https://github.com/afsar20/AfsarSharifProjects.github.io/blob/main/requirements.txt">requirements file</a>.</li>
               <li>No broker username, password or API credential is stored in the project.</li>
             </ul>
@@ -192,7 +202,7 @@
 
     <footer class="site-footer">
       <div class="shell footer-grid">
-        <p>Research demonstration using a saved user-generated market-data snapshot.</p>
+        <p>Research demonstration using a saved market data snapshot.</p>
         <div class="footer-links">
           <a href="../index.html">Portfolio</a>
           <a href="us-equities.html">Previous project</a>
