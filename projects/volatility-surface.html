@@ -57,32 +57,34 @@
       </div>
 
       <section class="section">
-        <div class="shell content-grid">
-          <div class="prose">
-            <p class="eyebrow">The build</p>
-            <h2>From a live chain to a repeatable research snapshot</h2>
-            <p>
-              The application connects to a locally running Interactive Brokers Trader Workstation or
-              Gateway session. It first resolves the SPY contract and retrieves the option chain that IBKR
-              labels SMART. SMART is IBKR's aggregated routing destination, allowing an eligible option contract
-              to be routed across supported exchanges instead of tying it to one venue.
-            </p>
-            <p>
-              From that chain, the program selects the next four expiries and up to nine strikes between 94%
-              and 106% of the current SPY price. This creates a manageable grid centred near spot rather than
-              requesting every listed contract. It uses puts below spot and calls at or above spot to focus on
-              the out of the money side of the smile.
-            </p>
-            <p>
-              IBKR returns contract details and model implied volatility through callbacks as each response
-              becomes available. Request IDs link every observation back to its expiry, strike and option type,
-              while completion events allow unavailable contracts to be skipped without blocking the rest of the grid.
-            </p>
+        <div class="shell">
+          <div class="content-grid">
+            <div class="prose">
+              <p class="eyebrow">The build</p>
+              <h2>From a live chain to a repeatable research snapshot</h2>
+              <p>
+                The application connects to a locally running Interactive Brokers Trader Workstation or
+                Gateway session. It first resolves the SPY contract and retrieves the option chain that IBKR
+                labels SMART. SMART is IBKR's aggregated routing destination, allowing an eligible option contract
+                to be routed across supported exchanges instead of tying it to one venue.
+              </p>
+              <p>
+                From that chain, the program selects the next four expiries and up to nine strikes between 94%
+                and 106% of the current SPY price. This creates a manageable grid centred near spot rather than
+                requesting every listed contract. It uses puts below spot and calls at or above spot to focus on
+                the out of the money side of the smile.
+              </p>
+            </div>
+            <figure class="figure-card dark">
+              <img src="../assets/images/volatility_surface.png" alt="SPY implied volatility surface across strike and expiry with a front expiry skew chart">
+              <figcaption>Latest observation in the saved sample. Gaps are interpolated for display only.</figcaption>
+            </figure>
           </div>
-          <figure class="figure-card dark">
-            <img src="../assets/images/volatility_surface.png" alt="SPY implied volatility surface across strike and expiry with a front expiry skew chart">
-            <figcaption>Latest observation in the saved sample. Gaps are interpolated for display only.</figcaption>
-          </figure>
+          <p class="section-summary">
+            IBKR returns contract details and model implied volatility through callbacks as each response
+            becomes available. Request IDs link every observation back to its expiry, strike and option type,
+            while completion events allow unavailable contracts to be skipped without blocking the rest of the grid.
+          </p>
         </div>
       </section>
 
@@ -161,7 +163,7 @@
       </section>
 
       <section class="section compact">
-        <div class="shell content-grid">
+        <div class="shell content-grid production-grid">
           <div class="prose">
             <p class="eyebrow">Limits</p>
             <h2>What would change in a production surface</h2>

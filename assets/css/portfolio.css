@@ -515,6 +515,10 @@ h3 {
   grid-template-columns: minmax(0, 1.28fr) minmax(0, 0.72fr);
 }
 
+.content-grid.production-grid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+}
+
 .prose h2 {
   margin-bottom: 22px;
   font-size: clamp(32px, 4vw, 48px);
@@ -593,8 +597,21 @@ h3 {
   margin-top: 16px;
 }
 
-.statistical-note {
-  margin: 28px 0;
+.statistics-explainer {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.statistics-explainer .callout {
+  height: 100%;
+}
+
+.section-summary {
+  max-width: 900px;
+  margin: 28px 0 0;
+  color: var(--ink-soft);
 }
 
 .production-list strong {
@@ -697,7 +714,8 @@ h3 {
   .hero-grid,
   .section-heading,
   .content-grid,
-  .content-grid.reverse {
+  .content-grid.reverse,
+  .content-grid.production-grid {
     grid-template-columns: 1fr;
     gap: 34px;
   }
@@ -708,7 +726,8 @@ h3 {
   }
 
   .project-grid,
-  .decision-grid {
+  .decision-grid,
+  .statistics-explainer {
     grid-template-columns: 1fr;
   }
 
