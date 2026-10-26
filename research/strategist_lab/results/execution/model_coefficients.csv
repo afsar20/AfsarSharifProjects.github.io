@@ -1,0 +1,11 @@
+feature,coefficient
+numeric__spread_bps,0.5513612447053299
+numeric__volatility_bps,0.7234222229363317
+numeric__sqrt_participation,0.5261051628956694
+numeric__urgency,0.32321184100792205
+categorical__venue_Venue A,-0.03924685684453093
+categorical__venue_Venue B,0.31516556456335837
+categorical__venue_Venue C,-0.2759187077220293
+categorical__strategy_Momentum,-0.004142816138153993
+categorical__strategy_Rebalance,0.004778494225355896
+categorical__strategy_StatArb,-0.0006356780877693652

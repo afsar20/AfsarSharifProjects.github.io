@@ -1,0 +1,12 @@
+{
+  "quantity": "realised volatility ratio: minimum variance / equal allocation",
+  "point": 0.4704136848925583,
+  "ci95": [
+    0.45468591154115445,
+    0.49028236054447877
+  ],
+  "block_sessions": 20,
+  "replicates": 1500,
+  "seed": 8901,
+  "limitation": "Conditional sampling uncertainty; does not cover design choices, source revisions or future regimes."
+}

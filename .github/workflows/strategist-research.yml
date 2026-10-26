@@ -1,0 +1,33 @@
+name: Validate strategist research
+on:
+  push:
+    paths:
+      - 'research/**'
+      - 'data/strategist_lab/**'
+      - '.github/workflows/strategist-research.yml'
+  pull_request:
+    paths:
+      - 'research/**'
+      - 'data/strategist_lab/**'
+      - '.github/workflows/strategist-research.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: research/strategist_lab/requirements.txt
+      - run: python -m pip install -r research/strategist_lab/requirements.txt
+      - name: Accounting, risk and chronology tests
+        run: python -m unittest discover -s research/strategist_lab/tests -v
+      - name: Reproduce both studies offline
+        run: python -m research.strategist_lab
+      - name: Predeclared robustness grids
+        run: python -m research.strategist_lab.robustness
+      - name: Build static research pages
+        run: python -m research.strategist_lab.reports

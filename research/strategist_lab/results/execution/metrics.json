@@ -1,0 +1,113 @@
+{
+  "seed": 20261025,
+  "data_type": "SYNTHETIC ORDERS, QUOTES, FILLS AND INCIDENTS",
+  "orders": 100000,
+  "fills": 289839,
+  "sessions": 250,
+  "start": "2025-01-02",
+  "end": "2025-12-31",
+  "train_end": "2025-07-07",
+  "validation_end": "2025-10-03",
+  "test_start": "2025-10-06",
+  "test_sessions": 61,
+  "ridge_alpha": 1.0,
+  "validation_mae_bps": 0.4114326826596296,
+  "test_mae_bps": 0.8905026248674917,
+  "fill_rate": 0.8335194516825335,
+  "quality": {
+    "raw_rows": 292739,
+    "clean_rows": 289839,
+    "exact_retries_removed": 2898,
+    "orphan_rows": 1,
+    "invalid_rows": 1,
+    "rejected_rows": 2
+  },
+  "reconciliation": {
+    "max_cost_error_usd": 9.731593308970332e-10,
+    "max_pnl_error_usd": 8.349161362275481e-10
+  },
+  "components_usd": {
+    "delay_usd": 676596.5483699709,
+    "market_usd": 453742.78118968266,
+    "execution_usd": 10237206.562399471,
+    "opportunity_usd": 2241940.633955092,
+    "fees": 277457.7884396389,
+    "is_usd": 13886944.314353867,
+    "ideal_pnl_usd": 13549910.20596359,
+    "net_pnl_usd": -337034.10839028325
+  },
+  "alert_evaluation": {
+    "execution": {
+      "tp": 15,
+      "fp": 0,
+      "fn": 0,
+      "tn": 168,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unit": "held-out session by venue"
+    },
+    "alpha": {
+      "tp": 15,
+      "fp": 0,
+      "fn": 0,
+      "tn": 168,
+      "precision": 1.0,
+      "recall": 1.0,
+      "unit": "held-out session by book"
+    }
+  },
+  "calibration": {
+    "venue:Venue A": {
+      "median": 0.005867624782725935,
+      "robust_sigma": 0.05,
+      "threshold_sigma": 4
+    },
+    "venue:Venue B": {
+      "median": 0.002342048232219836,
+      "robust_sigma": 0.05608035105985555,
+      "threshold_sigma": 4
+    },
+    "venue:Venue C": {
+      "median": -0.011420298714340341,
+      "robust_sigma": 0.06153752281885705,
+      "threshold_sigma": 4
+    },
+    "strategy:Momentum": {
+      "median": -0.06909975340627196,
+      "robust_sigma": 1.0194226415427199,
+      "threshold_sigma": 4
+    },
+    "strategy:Rebalance": {
+      "median": 0.2614876525925357,
+      "robust_sigma": 1.967002301108745,
+      "threshold_sigma": 4
+    },
+    "strategy:StatArb": {
+      "median": -0.09601609522784457,
+      "robust_sigma": 1.0511034996344653,
+      "threshold_sigma": 4
+    }
+  },
+  "venue_intervals": [
+    {
+      "venue": "Venue A",
+      "residual_mean_bps": 0.0048743182847820156,
+      "ci_low": -0.005577718512796263,
+      "ci_high": 0.013927771575484303
+    },
+    {
+      "venue": "Venue B",
+      "residual_mean_bps": 1.4625543997194812,
+      "ci_low": 0.3772843496202859,
+      "ci_high": 3.039484280737964
+    },
+    {
+      "venue": "Venue C",
+      "residual_mean_bps": -0.02346720987236637,
+      "ci_low": -0.038441151831455654,
+      "ci_high": -0.01486254518169584
+    }
+  ],
+  "decision_notional": 27757511795.785744,
+  "test_mean_residual_bps": 0.506743178130367
+}

@@ -7,4 +7,6 @@ data/raw/
 venv/
 node_modules
 site-preview/
+research/strategist_lab/results/**/*.sqlite
+research/strategist_lab/results/**/*.sqlite-*
 

@@ -1,0 +1,44 @@
+{
+  "retrieved_utc": "2026-10-25T23:25:26.016953+00:00",
+  "start": "2015-01-01",
+  "end": "2025-12-31",
+  "units": "daily decimal total returns; factors are zero-investment returns except RF",
+  "revision_note": "Latest revised public files, not a point-in-time historical database.",
+  "copyright": "Underlying source data: Eugene F. Fama and Kenneth R. French.",
+  "sources": {
+    "industries": {
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/10_Industry_Portfolios_daily_CSV.zip",
+      "source_header": "This file was created using the 202608 CRSP database.",
+      "archive_sha256": "12e33cce09517c9a2bb38cf75d43b5a15e65238848e864145d06d456e170161d",
+      "csv_sha256": "a814c03f06843fc57fd116e89f70273026e80e8ac2e42122d947e8d2dbdce889",
+      "rows": 2766,
+      "columns": [
+        "NoDur",
+        "Durbl",
+        "Manuf",
+        "Enrgy",
+        "HiTec",
+        "Telcm",
+        "Shops",
+        "Hlth",
+        "Utils",
+        "Other"
+      ]
+    },
+    "factors": {
+      "url": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_Research_Data_5_Factors_2x3_daily_CSV.zip",
+      "source_header": "This file was created by using the 202608 CRSP database.",
+      "archive_sha256": "7881223b51929ee0d6d23b8a28524aaec478a2c3d4eeca47224955cc845c5186",
+      "csv_sha256": "92afdf852b831c7432f84399378acb6dadc18d4484d91b1545f29a011f1290a4",
+      "rows": 2766,
+      "columns": [
+        "Mkt-RF",
+        "SMB",
+        "HML",
+        "RMW",
+        "CMA",
+        "RF"
+      ]
+    }
+  }
+}
