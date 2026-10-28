@@ -1,50 +1,48 @@
-# Afsar Sharif — market structure portfolio
+# Afsar Sharif — equity market research
 
-This repository powers [Afsar's project portfolio](https://afsar20.github.io/AfsarSharifProjects.github.io/) and contains four Python research projects:
+Code and results for [my research portfolio](https://afsar20.github.io/AfsarSharifProjects.github.io/).
 
-1. **US Equities Liquidity Intelligence** — public Cboe data used to analyse exchange versus off-exchange activity, tape-specific venue leadership, concentration on high-activity sessions and venue-share monitoring.
-2. **SPY Implied-Volatility Surface** — an Interactive Brokers API workflow for collecting option implied volatility, saving repeatable snapshots and visualising the surface and front-expiry skew.
-3. **[Trading Performance Diagnostics](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/trading-performance.html)** — 100,000 simulated parent orders, audited Python/SQL P&L attribution, conditional cost baselines and held-out production monitoring.
-4. **[Portfolio Risk and Crowding Lab](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/portfolio-risk.html)** — real public industry/factor returns, illustrative books, factor attribution, daily tail-risk forecasts, stress testing and constrained capital allocation.
+| Study | Question | Data |
+|---|---|---|
+| [Execution costs and trading results](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/trading-performance.html) | Did results weaken because of execution costs or the trading forecast? | 100,000 simulated orders |
+| [Portfolio risk and allocation](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/portfolio-risk.html) | How does dividing money differently change risk, losses and return? | Public industry returns and example portfolios |
+| [US equity market activity](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/us-equities.html) | Where was trading reported, and what changed on busy days? | Cboe daily US market totals for 2025 |
+| [SPY option volatility](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/volatility-surface.html) | How does model-implied volatility vary with option strike and expiry? | A saved Interactive Brokers market-data sample |
 
-The new studies have a separate [research guide](research/strategist_lab/README.md), [methodology](research/strategist_lab/METHODOLOGY.md) and [decision brief](research/strategist_lab/DECISION_BRIEF.md). Their pinned dependencies and commands are independent of the IBKR project:
+Each page explains the results, defines the terms used, and describes what the evidence can and cannot establish. Detailed formulas and numerical checks remain available in the code and methods files.
+
+## Rebuild the website
+
+The page text and shared layout are in `research/portfolio_site.py`. The two stylesheets are in `assets/css/`. To rebuild all five pages and their charts from the saved results:
 
 ```bash
 python -m pip install -r research/strategist_lab/requirements.txt
+python -m research.portfolio_site
+```
+
+The market-summary inputs used by the website are saved in `research/site_data/`. The original Cboe study can download the full source file separately. Changing the presentation does not rerun the execution or portfolio simulations.
+
+## Reproduce the execution and portfolio studies
+
+```bash
 python -m research.strategist_lab
 python -m research.strategist_lab.robustness
 python -m research.strategist_lab.reports
 python -m unittest discover -s research/strategist_lab/tests -v
 ```
 
-## Run the US equities study
+See the [research guide](research/strategist_lab/README.md), [findings](research/strategist_lab/DECISION_BRIEF.md) and [full methods](research/strategist_lab/METHODOLOGY.md). The tests cover accounting identities, input dates, allocation constraints and risk calculations.
 
-Open `notebooks/us_equities_liquidity_intelligence.ipynb`. The notebook downloads the 2025 Cboe CSV on first run and caches it under `data/raw/cboe/`.
+## Reproduce the earlier studies
 
 ```bash
 python -m pip install -r requirements.txt
-jupyter lab
-```
-
-The compact script version can also be run from the repository root:
-
-```bash
 python code/us_equities_liquidity.py
+python code/volatility_surface/render_snapshot.py code/volatility_surface/spy_iv_snapshot_sample.csv
 ```
 
-## Run the saved volatility snapshot
+The US market [notebook](notebooks/us_equities_liquidity_intelligence.ipynb) downloads the source file on its first run. The options project includes a saved CSV for offline use; live collection requires Interactive Brokers trading software, API access and appropriate data subscriptions. No credentials are stored here.
 
-```bash
-python code/volatility_surface/render_snapshot.py \
-  code/volatility_surface/spy_iv_snapshot_sample.csv
-```
+## Data
 
-Live collection requires Interactive Brokers Trader Workstation or IB Gateway, API access and the appropriate market-data subscription. No credentials are stored in this repository.
-
-## Data and limitations
-
-- Cboe is the source for the US equity market-volume data. Cboe states that the historical files are based on UTDF and CTS consolidated feeds.
-- The volatility example uses a saved SPY snapshot collected through the IBKR API.
-- These projects are research demonstrations using public or user-generated data. They do not contain employer or client data and are not trading recommendations.
-- The trading diagnostic ledger is entirely synthetic. The portfolio risk study uses real French research returns with disclosed illustrative books and costs. Full provenance, chronology and interpretation limits are documented with each study.
-
+The execution records are simulated. The risk study uses real French industry and factor returns with illustrative portfolios, financing and costs. The market-activity study uses public totals, and the options example uses a saved broker-data capture. The project pages identify the source, date and relevant limits. No employer or client records are included.

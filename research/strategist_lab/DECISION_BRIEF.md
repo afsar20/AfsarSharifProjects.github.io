@@ -1,23 +1,19 @@
-# Quantitative strategist research — decision brief
+# Research findings
 
-## Trading Performance Diagnostics
+## Execution costs and trading results
 
-- Question: is weaker net trading performance caused by execution or signal deterioration?
-- Experiment: 100,000 synthetic parent orders and 289,839 clean child fills; 61 held-out sessions.
-- Accounting: maximum cost-bridge error $9.73e-10; retries are idempotent, invalid messages quarantined, conflicting IDs and overfills fail.
-- Findings: independent simulated routing and signal-decay episodes are separated by cost residuals, latency and forecast errors. Classification tables and weaker-effect challenge cases are included.
-- Decision: investigate execution routing separately from signal calibration. Venue comparisons remain descriptive.
-- Limit: this validates a transparent simulator and accounting/monitoring implementation, not a live market result.
+The study separates trading costs from the quality of the original price forecast. It uses 100,000 simulated orders, including partial fills, unfilled orders and deliberately invalid records.
 
-## Portfolio Risk and Crowding Lab
+Two different problems were introduced: a temporary increase in one venue's execution costs and a later deterioration in one strategy group's forecasts. Separate checks identified them. The main incidents were deliberately large; smaller changes were harder to detect in the follow-up experiments.
 
-- Question: do different books share risk, and what changes when capital is reallocated?
-- Inputs: real French industry and five-factor daily returns, 2015–2025; six disclosed illustrative books; 2020–2025 walk-forward evaluation.
-- Equal allocation: 9.24% annualised return, 8.28% annual volatility, -11.63% maximum drawdown.
-- Minimum variance: 5.94% annualised return, 3.89% annual volatility, -4.64% maximum drawdown.
-- Decision: allocation changes risk and realised return together; investigate factor exposures, risk contributions and tail exceptions before changing the risk budget.
-- Limit: revised public indices and illustrative books/costs, not directly tradable assets or genuine fund performance. No alpha or capacity claim.
+The practical lesson is to investigate the execution process and the trading forecast separately. A decline in final profit alone cannot explain which has changed. These results validate the designed example, rather than accuracy on real trades.
 
-## Role relevance
+## Portfolio risk and allocation
 
-These projects demonstrate trading-data analytics, daily risk tools, strategic deep dives, continuous monitoring and communication of methods and results. They are independently designed portfolio work, with no QRT data or affiliation.
+The study compares three ways of dividing money between six example industry portfolios. The underlying industry returns are real public data; the portfolios and costs are illustrative.
+
+Equal amounts produced 9.24% annualised return and 8.28% annual volatility over 2020–2025. The lowest-risk allocation produced 5.94% return and 3.89% volatility. Volatility measures how widely returns vary. The largest falls from earlier highs were 11.63% and 4.64%, respectively.
+
+The lower risk came with a lower return. The loss forecast also needs improvement: the 99% historical threshold was exceeded on 27 days, versus 15.1 expected. Large losses occurred too often and clustered in time.
+
+The practical lesson is to compare money weights with actual risk contributions, retain useful offsets, and test the loss model against subsequent outcomes. The study is a historical illustration, not a directly tradable strategy.

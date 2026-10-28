@@ -1,0 +1,22 @@
+{
+  "year": 2025,
+  "sessions": 250,
+  "off_share": 0.44953483324525756,
+  "top_three_share": 0.6862529236150825,
+  "busy_share_difference": -0.03340923393407147,
+  "busy_share_ci95": [
+    -0.04225167159468667,
+    -0.02481604790499933
+  ],
+  "busy_sessions": 25,
+  "other_sessions": 225,
+  "hhi_difference": 187.9432449031574,
+  "off_share_by_measure": {
+    "Total Notional": 0.44953483324525756,
+    "Total Shares": 0.5072980324227961,
+    "Total Trade Count": 0.41141259462711866
+  },
+  "source": "https://cdn.cboe.com/resources/us/equities/market-statistics/historical-market-volume/market_history_2025.csv",
+  "source_sha256": "3f297d33729dc427e1f08f0ae9c6e05a95334ed9253211c97c2e8d4ce8183578",
+  "source_checked": "2026-10-28"
+}

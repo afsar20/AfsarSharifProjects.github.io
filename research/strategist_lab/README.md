@@ -1,21 +1,14 @@
-# Quantitative strategist research
+# Execution and portfolio studies
 
-Two complementary, fully implemented studies for a trading analytics / portfolio strategy role. Both provide an executive research page, inspectable Python, frozen inputs, exported results, methods, sensitivity experiments and meaningful validation tests.
+These studies examine two different trading questions. The website gives a plain-language explanation; the source and methods files contain the calculation details.
 
-| Study | Decision it supports | Main technical work |
-|---|---|---|
-| [Trading Performance Diagnostics](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/trading-performance.html) | Investigate execution deterioration separately from signal decay | Audited order/fill ingestion, SQL cost and P&L identities, conditional Ridge baseline, chronological calibration, group monitors, block bootstrap, labelled simulator challenges |
-| [Portfolio Risk and Crowding Lab](https://afsar20.github.io/AfsarSharifProjects.github.io/projects/portfolio-risk.html) | Understand common exposures, risk budgets and capital-allocation trade-offs | Public industry/factor returns, financing and cost accounting, shrinkage covariance, Euler contributions, factor attribution, constrained allocation, VaR/ES, coverage tests, historical and parametric stress |
+**Execution costs and trading results.** Follow 100,000 simulated orders from the original decision to the final result. Separate execution costs from forecast quality, check that every order's profit and costs reconcile, and test alerts on later days. Large inserted problems were detected; small changes were harder to identify. All trades and incidents are simulated.
 
-## Why these studies fit the role
+**Portfolio risk and allocation.** Divide money between six example industry portfolios using three allocation rules. Compare returns, volatility and losses, then check the risk forecasts against subsequent days. The lowest-risk rule reduced volatility and losses but also earned less. The 99% loss model was exceeded too often. Industry returns are public data; the portfolios and costs are illustrative.
 
-The [QRT Quantitative Strategist posting, ID 6785866002](https://www.qube-rt.com/careers/job?gh_jid=6785866002), emphasises analysing trading/production data, providing decision material to management, developing daily risk tools, sharing methodology and conducting portfolio deep dives. These projects demonstrate those activities directly. They are independent research and have no QRT affiliation or data.
+## Run the studies
 
-The two studies are intentionally complementary: the first shows order-level production analytics; the second shows portfolio-level risk judgement. The findings include failures and trade-offs, not just favourable statistics.
-
-## Reproduce offline
-
-Run from the repository root, using Python 3.12 in a virtual environment:
+Use Python 3.12 and run from the repository root:
 
 ```bash
 python3.12 -m venv .venv
@@ -27,57 +20,31 @@ python -m research.strategist_lab.reports
 python -m unittest discover -s research/strategist_lab/tests -v
 ```
 
-The first command runs both studies and renders the website pages. The second runs the full predeclared sensitivity grids; the third incorporates those robustness results into the research pages. All normal runs use the committed, hashed CSV inputs and need no API key, brokerage account or internet connection. The full run takes seconds to tens of seconds on an ordinary laptop, depending on hardware.
+The first analysis command runs both studies. The next repeats the comparisons under the saved alternative settings. The report command rebuilds the pages and figures from those results. Normal runs use the saved input files and do not need internet access or an API key.
 
-To run one engine or retain a queryable full ledger:
+To run one study or keep a full queryable order record:
 
 ```bash
 python -m research.strategist_lab --project execution --keep-db
 python -m research.strategist_lab --project portfolio
 ```
 
-The generated SQLite database is ignored by git; query `order_diagnostics` and `daily_production` using your SQLite client. Only a small internally consistent sample of clean orders and fills is committed. Changing `--orders-per-day` changes the simulation sample size and the published execution statistics when reports are rebuilt.
+The generated SQLite database is excluded from git. It contains `order_diagnostics` and `daily_production` tables for review. A small matching sample of orders and fills is committed. Changing `--orders-per-day` changes the simulated sample size.
 
-To intentionally replace the frozen input vintage, use `--refresh-data`. That action downloads the current French source archives, restricts the same 2015–2025 window, rewrites the hashes and reruns the requested study. It is never performed implicitly. A future source revision may change historical results; retain the manifest with each research version.
+`--refresh-data` deliberately replaces the saved 2015–2025 input files with the current version from the original source. It is never run automatically. Because source histories can be revised, retain the data record when comparing research versions.
 
-## Read the research
+## Files to read
 
-- [Decision brief](DECISION_BRIEF.md): findings, action and limitations for a manager.
-- [Methodology](METHODOLOGY.md): units, formulas, chronology, constraints, costs and inference limits.
-- [Trading notebook](../../notebooks/trading_performance_diagnostics.ipynb).
-- [Risk notebook](../../notebooks/portfolio_risk_crowding.ipynb).
-- [Execution engine](execution.py), [SQL accounting](sql/diagnostics.sql), [risk engine](portfolio.py), [data provenance](data.py), [sensitivity experiments](robustness.py).
-- [Tests](tests/test_research.py): ledger invariants, missing-data rejection, duplicate conflict handling, future-mutation tests, positive-semidefinite covariance, factor and Euler reconciliation, and allocation constraints.
+- [Findings](DECISION_BRIEF.md): the main results and their implications.
+- [Full methods](METHODOLOGY.md): definitions, formulas, costs, dates and study limits.
+- [Execution notebook](../../notebooks/trading_performance_diagnostics.ipynb) and [risk notebook](../../notebooks/portfolio_risk_crowding.ipynb).
+- [Order and monitoring calculations](execution.py), [SQL accounting](sql/diagnostics.sql), and [portfolio calculations](portfolio.py).
+- [Input validation](data.py), [alternative-setting comparisons](robustness.py), and [tests](tests/test_research.py).
 
-## Data and output map
+Saved results are in `results/execution/` and `results/portfolio/`. Website text and layout are maintained in `research/portfolio_site.py`, and chart formatting in `reports.py` and `research/site_figures.py`. These files rebuild the public pages without replacing the saved numerical results.
 
-```text
-data/strategist_lab/             frozen decimal daily returns and source manifest
-research/strategist_lab/
-  data.py                       source parsing, freezing and SHA-256 validation
-  execution.py                  synthetic ledger, accounting, modelling and monitors
-  sql/diagnostics.sql           auditable parent-level and session-level views
-  portfolio.py                  book construction, allocation, risk and backtesting
-  robustness.py                 fixed sensitivity grids and block-bootstrap interval
-  reports.py                    result-driven figures, pages and decision brief
-  results/execution/            daily and group monitors, ledger samples, coefficients
-  results/portfolio/            daily forecasts, monthly decisions, returns and tests
-  tests/                        numerical and chronology checks
-```
+## Source and interpretation
 
-The publication figures are SVGs generated with Matplotlib. Interactive controls run locally in the browser over an embedded research snapshot; the website does not connect to a trading service or submit orders.
+The [Kenneth French Data Library](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html) supplies the daily industry and market-factor returns. Underlying data remain copyright Eugene F. Fama and Kenneth R. French. The saved 2015–2025 subset was downloaded on 25 October 2026 from the August 2026 source version. The file hashes and source details are recorded in `data/strategist_lab/manifest.json`; hashes check that the input files have not changed.
 
-## Data provenance and interpretation
-
-The primary sources are the [Kenneth French Data Library](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html), its [ten-industry construction description](https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/det_10_ind_port.html) and the [scikit-learn Ledoit–Wolf implementation](https://scikit-learn.org/stable/modules/generated/sklearn.covariance.LedoitWolf.html). Underlying French data remain copyright Eugene F. Fama and Kenneth R. French; this repository does not claim ownership of those data.
-
-The committed sample spans 2015–2025 and was retrieved on 25 October 2026 from the source's August 2026 vintage. It is a revised historical research dataset, not a reconstructed historical information set. Normal runs are frozen to that sample even if newer data become available.
-
-All trading records and incidents are simulated. Industry/factor returns are real; the risk study's books, financing, costs and allocation policies are illustrative. Neither study establishes tradable alpha, real venue superiority, real hedge-fund returns, external-manager crowding or market capacity. No employer or client information is included.
-
-## Natural extensions
-
-1. Replace synthetic trading records through a schema-preserving adapter; add event/receipt timestamps, corrections, currency conversion, genuine quotes and multiple horizons.
-2. Test monitor persistence, multiple-testing control and regime shifts on independently sourced executions; use randomisation or a credible causal design before making routing recommendations.
-3. Replace industry research books with daily real positions and reconciled P&L; model borrow recalls, liquidity horizons, nonlinear assets and manager capacity.
-4. Compare volatility-responsive and heavy-tailed risk models using a prospective validation protocol; current VaR exceptions show why this matters.
+The historical inputs contain revisions and do not recreate the exact information available at each past date. The example portfolios are industry research exposures, not directly tradable products. The studies do not establish real venue superiority, a profitable live strategy, external-fund crowding or trading capacity. No employer or client data are used.

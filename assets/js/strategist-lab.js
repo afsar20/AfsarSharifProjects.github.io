@@ -20,7 +20,7 @@
       document.getElementById("exec-residual").textContent=mean("residual_bps").toFixed(2)+" bps";
       document.getElementById("exec-latency").textContent=mean("latency_ms").toFixed(1)+" ms";
       document.getElementById("exec-alerts").textContent=String(alerts);
-      document.getElementById("exec-live").textContent=`${venue.value === "All" ? "All venues" : venue.value} · ${count.toLocaleString()} filled parents · ${rows.length} venue sessions. Positive residual means execution was worse than its frozen baseline.`;
+      document.getElementById("exec-live").textContent=`${venue.value === "All" ? "All venues" : venue.value} · ${count.toLocaleString()} filled orders · ${rows.length} venue-days. Positive values mean higher execution costs than the estimate.`;
       const grouped = new Map();
       rows.forEach(r=>{const x=grouped.get(r.date)||{sum:0,n:0};x.sum+=r.residual_bps*r.orders;x.n+=r.orders;grouped.set(r.date,x);});
       const points=[...grouped].map(([date,v])=>({date,y:v.sum/v.n}));
@@ -30,9 +30,9 @@
       const y=v=>height-bottom-(v-min)/(max-min)*(height-top-bottom);
       const grid=Array.from({length:5},(_,i)=>min+i*(max-min)/4).map(v=>`<line class="grid" x1="${left}" x2="${width-right}" y1="${y(v)}" y2="${y(v)}"/><text x="${left-10}" y="${y(v)+4}" text-anchor="end">${v.toFixed(1)}</text>`).join("");
       const path=points.map((p,i)=>(i?"L":"M")+x(i).toFixed(2)+","+y(p.y).toFixed(2)).join(" ");
-      document.getElementById("execution-chart").innerHTML=`<title>Daily execution residual in basis points</title>${grid}<line class="zero" x1="${left}" x2="${width-right}" y1="${y(0)}" y2="${y(0)}"/><path class="line" d="${path}"/>`+
-        points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.y)}" r="3" fill="#087f78"><title>${p.date}: ${p.y.toFixed(2)} bps</title></circle>`).join("")+
-        `<text x="${left}" y="${height-8}">${points[0].date}</text><text x="${width-right}" y="${height-8}" text-anchor="end">${points[points.length-1].date}</text><text x="${left}" y="12">Residual (bps)</text>`;
+      document.getElementById("execution-chart").innerHTML=`<title>Extra execution cost by day (basis points)</title>${grid}<line class="zero" x1="${left}" x2="${width-right}" y1="${y(0)}" y2="${y(0)}"/><path class="line" d="${path}"/>`+
+        points.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.y)}" r="3" fill="#234d70"><title>${p.date}: ${p.y.toFixed(2)} bps</title></circle>`).join("")+
+        `<text x="${left}" y="${height-8}">${points[0].date}</text><text x="${width-right}" y="${height-8}" text-anchor="end">${points[points.length-1].date}</text><text x="${left}" y="12">Extra cost (bps)</text>`;
     }
     venue.addEventListener("change",draw);period.addEventListener("change",draw);draw();
   }
@@ -54,7 +54,7 @@
       document.getElementById("vol-value").textContent=v.toFixed(2)+"×";
       document.getElementById("corr-value").textContent=pct(c,0);
       document.getElementById("leverage-value").textContent=l.toFixed(2)+"×";
-      document.getElementById("risk-live").textContent=`As of ${data.as_of}. Normal 99% one-day VaR at zero mean; it is a model estimate and can be exceeded. Correlation blends ${pct(c,0)} of the way towards +1 across all books.`;
+      document.getElementById("risk-live").textContent=`As of ${data.as_of}. The estimate assumes a normal bell-shaped return distribution and no expected daily gain. Correlation is moved ${pct(c,0)} of the way towards all six portfolios moving perfectly together. Losses can exceed the displayed threshold.`;
       document.getElementById("risk-table-body").innerHTML=data.book_names.map((name,i)=>{
         const rc=w[i]*marginal[i]/daily*Math.sqrt(252)*l;
         return `<tr><td>${name}</td><td>${pct(w[i],1)}</td><td>${(100*rc).toFixed(2)} pp<div class="lab-bar" style="width:${Math.min(100,Math.abs(rc/annual)*100)}%"></div></td></tr>`;
