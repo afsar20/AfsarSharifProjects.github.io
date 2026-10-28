@@ -14,7 +14,7 @@ import pandas as pd
 ROOT=Path(__file__).resolve().parents[1]
 RESULTS=ROOT/"research/strategist_lab/results"
 GITHUB="https://github.com/afsar20/AfsarSharifProjects.github.io"
-VERSION="20261028"
+VERSION="20261028b"
 POLICIES={"equal":"Equal amounts","inverse_vol":"More to lower-risk portfolios","minimum_variance":"Lowest estimated combined risk"}
 BOOKS=["Technology","Technology and retail","Defensive industries","Cyclical industries","Consumer industries","Broad equities"]
 PROJECTS=[
@@ -59,7 +59,7 @@ def header(home=False):
     prefix="" if home else "../"
     return f'''<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><nav class="nav shell" aria-label="Main navigation">
-<a class="brand" href="{prefix}index.html">Afsar Sharif<span>Research</span></a>
+<a class="brand" href="{prefix}index.html" aria-label="Afsar Sharif research, home">Afsar Sharif<span>Research</span></a>
 <ul class="nav-links"><li><a href="{prefix}index.html#work">Projects</a></li><li><a href="{prefix}index.html#about">About</a></li><li><a href="https://github.com/afsar20">GitHub</a></li></ul>
 </nav></header>'''
 
@@ -69,7 +69,7 @@ def footer(home=False):
     return f'''<footer class="site-footer"><div class="shell footer-inner"><p>Afsar Sharif · Equity market research</p><div><a href="{prefix}index.html">All projects</a><a href="https://github.com/afsar20">GitHub</a><a href="https://www.linkedin.com/in/afsar-sharif-75ba42143/">LinkedIn</a></div></div></footer>'''
 
 
-def wrap(title,description,content,home=False,data=None):
+def wrap(title,description,content,home=False,data=None,theme=""):
     prefix="" if home else "../"
     script=''
     if data:
@@ -80,7 +80,7 @@ def wrap(title,description,content,home=False,data=None):
 <meta name="description" content="{esc(description)}"><title>{esc(title)} | Afsar Sharif</title>
 <link rel="stylesheet" href="{prefix}assets/css/portfolio.css?v={VERSION}">
 <link rel="stylesheet" href="{prefix}assets/css/strategist-lab.css?v={VERSION}"></head>
-<body>{header(home)}{content}{footer(home)}{script}</body></html>\n'''
+<body class="{'home-page' if home else 'study-page'} {theme}">{header(home)}{content}{footer(home)}{script}</body></html>\n'''
 
 
 def project(index,intro,scope,sections,data=None):
@@ -96,7 +96,7 @@ def project(index,intro,scope,sections,data=None):
 <dl class="study-meta">{meta}</dl></div></div>
 <div class="shell report-layout"><aside class="contents" aria-label="On this page"><p>In this study</p><ol>{nav}</ol></aside>
 <article class="report">{article}<nav class="next-study" aria-label="Other studies"><a href="../index.html#work">All projects</a><a href="{next_project[0]}.html">Next: {next_project[1]}</a></nav></article></div></main>'''
-    return wrap(title,intro,content,data=data)
+    return wrap(title,intro,content,data=data,theme=f"study-{index+1}")
 
 
 def home(e,p,u):
@@ -108,8 +108,9 @@ def home(e,p,u):
     ]
     rows=''
     for i,((slug,title,category,source,image),(summary,result)) in enumerate(zip(PROJECTS,summaries),1):
-        rows+=f'''<article class="project-row"><span class="project-index">{i:02d}</span><div class="project-copy"><p class="project-meta">{category} / {source}</p><h3><a href="projects/{slug}.html">{title}</a></h3><p>{summary}</p><p class="project-result">{result}</p><a class="project-link" href="projects/{slug}.html">Read the study →</a></div><a class="project-preview" href="projects/{slug}.html" aria-label="Open {title}"><img src="assets/images/{image}" alt="Chart from {title}" loading="lazy"></a></article>'''
-    content=f'''<main id="main"><section class="home-intro"><div class="shell"><p class="kicker">Market structure / Execution / Portfolio risk</p><h1>Equity market research.</h1><p class="intro-copy">Studies of trading activity, execution costs, portfolio risk and options data. Each project explains the question, the method and what the results mean.</p><div class="text-links"><a href="#work">View the projects</a><a href="{GITHUB}">View the code</a></div></div></section>
+        rows+=f'''<article class="project-row study-{i}"><span class="project-index">{i:02d}</span><div class="project-copy"><p class="project-meta">{category} / {source}</p><h3><a href="projects/{slug}.html">{title}</a></h3><p>{summary}</p><p class="project-result">{result}</p><a class="project-link" href="projects/{slug}.html">Read the study <span aria-hidden="true">↗</span></a></div><a class="project-preview" href="projects/{slug}.html" aria-label="Open {title}"><span class="preview-label">{i:02d} / {category}<span aria-hidden="true">↗</span></span><img src="assets/images/{image}" alt="Chart from {title}" loading="lazy"></a></article>'''
+    index_links=''.join(f'<a href="projects/{slug}.html"><span class="index-number">{i:02d}</span><span>{label}</span><span class="index-arrow" aria-hidden="true">↗</span></a>' for i,((slug,*_),label) in enumerate(zip(PROJECTS,["Execution costs","Portfolio risk","US market activity","Option volatility"]),1))
+    content=f'''<main id="main"><section class="home-intro"><div class="shell hero-layout"><div class="hero-copy"><p class="kicker">Market structure / Execution / Portfolio risk</p><h1>Equity market<br> <em>research.</em></h1><p class="intro-copy">Studies of trading activity, execution costs, portfolio risk and options data. Each project explains the question, the method and what the results mean.</p><div class="text-links"><a href="#work">View the projects <span aria-hidden="true">↓</span></a><a href="{GITHUB}">View the code <span aria-hidden="true">↗</span></a></div></div><aside class="hero-index" aria-label="Research index"><p>Research index <span>01—04</span></p>{index_links}<div class="index-footer">Four studies · Methods and results</div></aside></div></section>
 <section class="shell" id="work"><div class="section-label"><h2>Selected projects</h2><p>Four studies · Code and data included</p></div>{rows}</section>
 <section class="shell about-section" id="about"><div><p class="kicker">About</p><h2>About these projects</h2></div><div><p>I work in equity market structure and execution analytics in London. My interests include where liquidity is available, how trading costs affect results, and how portfolios behave when markets change.</p><p>These are personal research projects. The pages identify whether the data are public, collected through a broker, or simulated. The code and methods are available for review.</p><dl class="profile-details"><div><dt>Focus</dt><dd>Equities and execution</dd></div><div><dt>Tools</dt><dd>Python, SQL, Tableau</dd></div><div><dt>Location</dt><dd>London</dd></div></dl></div></section>
 <div class="shell archive"><p>Earlier data projects</p><a href="https://github.com/afsar20/PortfolioProjects/blob/main/Movies%20Correlation%20Project.ipynb">Film revenue analysis</a><a href="https://github.com/afsar20/PortfolioProjects/blob/main/CovidDataExploration.sql">COVID-19 data</a><a href="https://github.com/afsar20/PortfolioProjects/blob/main/NashvilleHousing_cleaning_data.sql">Housing data cleaning</a></div></main>'''
